@@ -1,4 +1,21 @@
-import { PlayerClient } from './PlayerClient';
+class PlayerClient {
+    constructor(id, socket, state) {
+        this.id = id;
+        this.socket = socket;
+        this.state = state;
+        this.partner = null;
+        this.data = '';
+    }
+    getPartner() {
+        return this.partner;
+    }
+    setPartner(partner) {
+        this.partner = partner;
+    }
+    setData(data) {
+        this.data = data;
+    }
+}
 
 const express = require('express');
 const app = express();
@@ -7,11 +24,16 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
 
+const path = require('path');
+const publicDir = path.join(__dirname, 'client');
+
 const PORT = 3001;
 
 app.get('/', (req, res) => {
-    res.send('<h1>Hello World!</h1>');
-})
+    res.sendFile(path.join(publicDir, 'index.html'));
+});
+
+app.use('/', express.static(publicDir));
 
 let connectedUsers = [];
 let idPool = 0;

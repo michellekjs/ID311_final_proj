@@ -1,12 +1,7 @@
-import '../css/style.css';
-import { sketch } from 'p5js-wrapper';
-import { GameClient } from '../network/GameClient';
-import { CharacterNetwork } from '../network/CharacterNetwork';
-
 let myChar;
 let partnerChar;
 
-sketch.setup = function() {
+setup = function() {
     createCanvas(800, 600);
     const gameClient = GameClient.getInstance();
     gameClient.connect();
@@ -15,7 +10,7 @@ sketch.setup = function() {
     partnerChar = new CharacterNetwork('partner');
 }
 
-sketch.draw = function() {
+draw = function() {
     background(100);
     fill(255, 0, 0);
     noStroke();

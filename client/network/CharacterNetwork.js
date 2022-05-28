@@ -1,5 +1,3 @@
-import { GameClient } from "./GameClient";
-
 class CharacterNetwork {
     constructor(tag) {
         this.tag = tag
@@ -35,5 +33,3 @@ class CharacterNetwork {
         self.posY = syncData.posY;
     }
 }
-
-export { CharacterNetwork };
