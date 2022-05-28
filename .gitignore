@@ -2,3 +2,5 @@
 node_modules/**
 .git/**
 server.tar.gz
+node_modules
+package-lock.json
