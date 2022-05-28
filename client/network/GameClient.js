@@ -13,7 +13,7 @@ class GameClient {
         const gameClient = this;
         const io = require('socket.io-client')
 
-        const client = io.connect('http://3.35.10.195:3001/');
+        const client = io.connect('http://52.79.235.185:3001/');
 
         client.on('connect', (msg) => {
             console.log('GameClient ready');

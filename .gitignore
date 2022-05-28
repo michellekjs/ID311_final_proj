@@ -4,3 +4,4 @@ node_modules/**
 server.tar.gz
 node_modules
 package-lock.json
+ec2-user@52.79.235.185
