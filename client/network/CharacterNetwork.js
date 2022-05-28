@@ -35,3 +35,5 @@ class CharacterNetwork {
         self.posY = syncData.posY;
     }
 }
+
+export { CharacterNetwork };

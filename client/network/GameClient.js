@@ -1,3 +1,5 @@
+import { io } from 'socket.io-client';
+
 class GameClient {
     static getInstance() {
         if (!this.instance) {
@@ -11,7 +13,7 @@ class GameClient {
     }
     connect() {
         const gameClient = this;
-        const io = require('socket.io-client')
+        //const io = require('socket.io-client')
 
         const client = io.connect('http://52.79.235.185:3001/');
 
