@@ -1,0 +1,8 @@
+.vscode
+node_modules/**
+.git/**
+server.tar.gz
+client.tar.gz
+node_modules
+package-lock.json
+ec2-user@52.79.235.185
