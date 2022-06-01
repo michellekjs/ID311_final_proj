@@ -6,7 +6,7 @@ class Character {
         this.vX = 0;
         this.vY = 0;
         this.gravity = 0.3;
-        this.jumping = true;
+        this.jumping = false;
         this.player = createSprite(width / 2, 0, this.width, this.height);
         this.player.debug = true;
         this.player.friction = 0.01;
@@ -16,8 +16,10 @@ class Character {
     }
     drawPlayer() {
         if (this.jumping) {
+            // console.log("IS JUMPING")
             this.player.velocity.y += this.gravity;
         } else {
+            // console.log("HI")
             this.player.velocity.y = 0;
         }
         drawSprite(this.player);
@@ -26,6 +28,7 @@ class Character {
     checkJump() {
         if (myChar.player.touching.bottom) {
             this.jumping = false;
+            // console.log("checking jumping")
         } else {
             this.jumping = true;
         }
@@ -36,13 +39,14 @@ class Character {
             this.player.addSpeed(0.2, 0);
         } else if (keyIsDown(DOWN_ARROW)) {
             this.player.addSpeed(0.2, 270);
+            console.log(this.player.velocity)
         } else if (keyIsDown(LEFT_ARROW)) {
             this.player.addSpeed(0.2, 180);
         } else if (keyIsDown(UP_ARROW)) {
-            if (this.jumping == false) {
+            if (!this.checkJump()) {
                 console.log("jump");
-                this.player.velocity.y = -15;
-                // this.jumping=true;
+                this.player.velocity.y = -8;
+                // console.log(this.player.velocity);
             }
         }
         this.update();
