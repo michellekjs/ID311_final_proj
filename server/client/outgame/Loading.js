@@ -10,11 +10,13 @@ function setup(){
   //button styling
   startButton = createButton('Start Game')
   startButton.mousePressed(moveNickname);
-  startButton.position(windowWidth/2-50,windowHeight-100)
+  startButton.position(windowWidth/2-100,windowHeight-150)
   startButton.style('background', 'none')
   startButton.style('color', 'white')
   startButton.style('border', 'none')
-  startButton.style('font-size', '30px')
+  startButton.style('font-size', '50px')
+  startButton.style('font-weight', 'bold')
+  startButton.style('font-family', 'coolveticarg')
 }
 
 function draw(){
@@ -23,8 +25,9 @@ function draw(){
   noStroke();
   fill(255)
   textAlign(CENTER);
-  text('Leader Board',3*windowWidth/4, windowHeight/2 -330)
-  rect(3*windowWidth/4, windowHeight/2, 400, 600, 20)
+  textFont(font)
+  text('Leader Board',3*windowWidth/4, windowHeight/2 -400)
+  rect(3*windowWidth/4, windowHeight/2-80, 400, 600, 20)
 
   
 }
