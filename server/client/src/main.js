@@ -1,13 +1,18 @@
 let myChar;
 let partnerChar;
 let gameMap;
+let playerGroup;
+let grabCase = false;
 const wallD = 50;
 setup = function() {
     createCanvas(800, 600);
     const gameClient = GameClient.getInstance();
     gameClient.connect();
-    myChar = new Character('me');
-    partnerChar = new Character('partner');
+    playerGroup = new Group();
+    myChar = new Character('me',"big");
+    partnerChar = new Character('partner',"small");
+    playerGroup.add(myChar.player);
+    playerGroup.add(partnerChar.player);
     createMap();
 }
 
@@ -17,32 +22,51 @@ draw = function() {
     fill(255, 0, 0);
     noStroke();
     rectMode(CENTER);
-    myChar.player.collide(gameMap);
-    myChar.player.collide(partnerChar.player);
-    myChar.checkJump();
     camera.position.x = myChar.player.position.x;
     camera.position.y = myChar.player.position.y;
 
-    myChar.playerMove();
-    partnerChar.syncPosition();
+    playerGroup.collide(gameMap);
+    if(!myChar.nowGrab){
+        myChar.player.collide(partnerChar.player);
+    }else if(myChar.nowGrab){
+        myChar.player.overlap(partnerChar.player);
+    }
+    myChar.checkJump();
+    partnerChar.checkJump();
+
+    myChar.checkGrab(partnerChar);//myChar가 작은 팽귄일 경우
+    partnerChar.checkGrab(myChar);
+
+
 
     myChar.drawPlayer();
     partnerChar.drawPlayer();
+
+    myChar.playerMove();
+// partnerChar.playerMove();
+
+    myChar.update();
+    partnerChar.update();//local에서만 필요할듯?
+    
+    // console.log(partnerChar.player.velocity.y);
+
+    partnerChar.syncPosition();//지금은 안사용
+
     fill(0, 255, 0);
 }
 
 createMap = function() {
     gameMap = new Group();
-    bottomWall = createSprite(width / 2, height, width, wallD);
+    bottomWall = createSprite(width, height, width*2, wallD);
     bottomWall.immovable = true;
     bottomWall.debug = true;
-    topWall = createSprite(width / 2, 0, width, wallD);
+    topWall = createSprite(width, 0, width*2, wallD);
     topWall.immovable = true;
     topWall.debug = true;
     leftWall = createSprite(0, height / 2, wallD, height);
     leftWall.immovable = true;
     leftWall.debug = true;
-    rightWall = createSprite(width, height / 2, wallD, height);
+    rightWall = createSprite(width*2, height / 2, wallD, height);
     rightWall.immovable = true;
     rightWall.debug = true;
 
@@ -53,7 +77,28 @@ createMap = function() {
     gameMap.add(topWall);
     gameMap.add(leftWall);
     gameMap.add(rightWall);
-    gameMap.add(block1);
+    // gameMap.add(block1);
+}
+
+function keyPressed() {
+    if(keyCode == 38){//uparrow
+        console.log("uparrow");
+        myChar.jump();
+    }
+    else if (keyCode == 71) {//g
+        console.log("g");
+        if(grabCase){
+            if(partnerChar.player.deltaX<0){
+                partnerChar.player.setSpeed(15,-135);
+            }else{
+                partnerChar.player.setSpeed(15,-45);
+            }
+        }
+        grabCase = myChar.grab(partnerChar.player.position);
+    }
+    else if (keyCode == 80) {
+        console.log("p");
+    }
 }
 
 drawMap = function() {
