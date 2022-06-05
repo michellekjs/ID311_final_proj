@@ -32,6 +32,7 @@ function setup(){
 
   randomSelect = createButton('Random Match');
   randomSelect.position(400, 580)
+  randomSelect.mousePressed(moveWaitroom);
   randomSelect.style('border-radius', '20px');
   randomSelect.style('border', 'none');
   randomSelect.style('width', '700px');
@@ -48,6 +49,7 @@ function draw(){
   fill(255)
   text("Play with Friend",400, 300 )
   text("Play with Stranger", 400, 550)
+  text("My Nickname",windowWidth-200, 50 )
   
 }
 

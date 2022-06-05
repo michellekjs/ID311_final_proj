@@ -1,7 +1,12 @@
+// import closelock from '../assets/icon/closelock.png';
+// import openlock from '../assets/icon/openlock.png';
+let lockd = true;
 
 //localstorage
 function preload(){
   font = loadFont('../assets/font/coolveticarg.otf');
+  cl = loadImage('../assets/icon/closelock.png')
+  ol = loadImage('../assets/icon/openlock.png')
 }
 
 function setup(){
@@ -20,14 +25,30 @@ function setup(){
   button.style('color', 'white');
   button.style('font-family', 'coolveticarg');
   button.mousePressed(moveMain);
+  
+  if (lockd) {
+    lock = createImg('../assets/icon/closelock.png');
+    lock.style('color', 'rgb(255,255,255)')
+  }
+  else {
+    lock = createImg('../assets/icon/openlock.png');
+  }
+  lock.position(windowWidth-80, 50);
+  lock.mousePressed(changeImage)
 
+  crown = createImg('../assets/icon/crown.png');
+  crown.position(windowWidth/3-40, 80);
+  crown.style('width', '100px');
+  crown.style('height', '100px');
+ 
+ 
 
   createCanvas(windowWidth, windowHeight);
-   
 
 }
 
 function draw(){
+  
   background('#7FCCDB'); 
   textAlign(CENTER)
   textSize(40)
@@ -35,7 +56,10 @@ function draw(){
   textSize(30)
   text("Nickname1", windowWidth/3, 200)
   text("Nickname2", windowWidth*2/3, 200)
-  
+
+  textAlign(CENTER);
+  text ("Tutorial", windowWidth-160, 80)
+
   noFill();
   stroke(255);
   strokeWeight(4);
@@ -46,13 +70,24 @@ function draw(){
     rect(windowWidth*2/3-190,130,400,500,40)
   }
   
+  // image(cl, windowWidth-80, 50, 50, 50);
 
 }
 
-
-
 function moveMain() {
   window.location.href = "../game.html"
+}
+
+function changeImage () {
+  lockd = !lockd
+}
+
+function myCheckedEvent() {
+  if (checkbox.checked()) {
+    console.log('Checking!');
+  } else {
+    console.log('Unchecking!');
+  }
 }
 
 // export {Player};

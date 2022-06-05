@@ -14,7 +14,6 @@ function setup(){
   player.style('text-align', 'center');
   player.style('font-family', 'coolveticarg');
   player.style('font-size', '30px');
-  player.style('color', '#F7F7F7');
   player.center();
 
   //enter button and styling  
