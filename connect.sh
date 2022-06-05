@@ -1,0 +1,1 @@
+ssh -i id311-project-aws-ec2.pem ec2-user@52.79.235.185
