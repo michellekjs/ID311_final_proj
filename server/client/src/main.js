@@ -4,15 +4,30 @@ let gameMap;
 let playerGroup;
 let grabCase = false;
 const wallD = 50;
+let pitFill, buttonDoor;
+
 setup = function() {
     createCanvas(800, 600);
     const gameClient = GameClient.getInstance();
     gameClient.connect();
+
+    //create pitfill sprite
+    pitFill = new PitFill(width-100, height-50, 100, 50,width-200, height-50, 50, 50, "v", 20);
+    pitFill.create();
+
+    //button click and entrance appears
+    buttonDoor = new ButtonDoor(width + 100, height-50, 50, 120,width+ 300, height-100, 200, 200);
+    buttonDoor.create();
+    
+    
+    //initiate players
     playerGroup = new Group();
     myChar = new Character('me',"big");
     partnerChar = new Character('partner',"small");
     playerGroup.add(myChar.player);
     playerGroup.add(partnerChar.player);
+
+    //map initiating
     createMap();
 }
 
@@ -24,6 +39,11 @@ draw = function() {
     rectMode(CENTER);
     camera.position.x = myChar.player.position.x;
     camera.position.y = myChar.player.position.y;
+
+    //pitfill rendering 
+    pitFill.ispressed(myChar.player);
+    //buttondoor rendering 
+    buttonDoor.ispressed(myChar.player);
 
     playerGroup.collide(gameMap);
     if(!myChar.nowGrab){
@@ -37,8 +57,6 @@ draw = function() {
     myChar.checkGrab(partnerChar);//myChar가 작은 팽귄일 경우
     partnerChar.checkGrab(myChar);
 
-
-
     myChar.drawPlayer();
     partnerChar.drawPlayer();
 
@@ -47,8 +65,6 @@ draw = function() {
 
     myChar.update();
     partnerChar.update();//local에서만 필요할듯?
-    
-    // console.log(partnerChar.player.velocity.y);
 
     partnerChar.syncPosition();//지금은 안사용
 
@@ -57,7 +73,7 @@ draw = function() {
 
 createMap = function() {
     gameMap = new Group();
-    bottomWall = createSprite(width, height, width*2, wallD);
+    bottomWall = createSprite(width, height, width*4, wallD);
     bottomWall.immovable = true;
     bottomWall.debug = true;
     topWall = createSprite(width, 0, width*2, wallD);
@@ -73,11 +89,18 @@ createMap = function() {
     block1 = createSprite(width / 1.5, height / 1.5, width / 2, wallD);
     block1.immovable = true;
     block1.debug = true;
+
+    //add pitfill to the gamemap
+
+    gameMap.add(pitFill.button);
+    gameMap.add(pitFill.pit);
+    gameMap.add(buttonDoor.box);
+    gameMap.add(buttonDoor.cliff);
+    gameMap.add(buttonDoor.button);
     gameMap.add(bottomWall);
     gameMap.add(topWall);
     gameMap.add(leftWall);
-    gameMap.add(rightWall);
-    // gameMap.add(block1);
+    // gameMap.add(rightWall);
 }
 
 function keyPressed() {
