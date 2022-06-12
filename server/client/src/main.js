@@ -4,7 +4,7 @@ let gameMap;
 let playerGroup;
 let grabCase = false;
 const wallD = 50;
-let pitFill, buttonDoor;
+let pitFill, buttonDoor, gameEnd;
 
 setup = function() {
     createCanvas(800, 600);
@@ -12,20 +12,24 @@ setup = function() {
     gameClient.connect();
 
     //create pitfill sprite
-    pitFill = new PitFill(width-100, height-50, 100, 50,width-200, height-50, 50, 50, "v", 20);
+    pitFill = new PitFill(width-100, height-50, 100, 50,width-200, height-50, 50, 50, "v", 100);
     pitFill.create();
 
     //button click and entrance appears
-    buttonDoor = new ButtonDoor(width + 100, height-50, 50, 120,width+ 300, height-100, 200, 200);
+    buttonDoor = new ButtonDoor(width + 100, height-50, 50, 120,width+ 300, height-50, 200, 200);
     buttonDoor.create();
-    
-    
+
     //initiate players
     playerGroup = new Group();
     myChar = new Character('me',"big");
     partnerChar = new Character('partner',"small");
     playerGroup.add(myChar.player);
     playerGroup.add(partnerChar.player);
+
+
+    //game end sprite initialize
+    gameEnd = new GameEnd(width + 500, height-50);
+    gameEnd.create();
 
     //map initiating
     createMap();
@@ -44,7 +48,10 @@ draw = function() {
     pitFill.ispressed(myChar.player);
     //buttondoor rendering 
     buttonDoor.ispressed(myChar.player);
+    //gameend button activated
+    gameEnd.activate(myChar.player);
 
+    //player movement
     playerGroup.collide(gameMap);
     if(!myChar.nowGrab){
         myChar.player.collide(partnerChar.player);
@@ -53,18 +60,16 @@ draw = function() {
     }
     myChar.checkJump();
     partnerChar.checkJump();
-
-    myChar.checkGrab(partnerChar);//myChar가 작은 팽귄일 경우
+    myChar.checkGrab(partnerChar);//myChar가 작은 팽귄
     partnerChar.checkGrab(myChar);
 
     myChar.drawPlayer();
     partnerChar.drawPlayer();
 
-    myChar.playerMove();
-// partnerChar.playerMove();
+    myChar.playerMove(); // partnerChar.playerMove();
 
     myChar.update();
-    partnerChar.update();//local에서만 필요할듯?
+    partnerChar.update();
 
     partnerChar.syncPosition();//지금은 안사용
 
@@ -96,7 +101,9 @@ createMap = function() {
     gameMap.add(pitFill.pit);
     gameMap.add(buttonDoor.box);
     gameMap.add(buttonDoor.cliff);
+    gameMap.add(buttonDoor.cliff2);
     gameMap.add(buttonDoor.button);
+    gameMap.add(gameEnd.end);
     gameMap.add(bottomWall);
     gameMap.add(topWall);
     gameMap.add(leftWall);

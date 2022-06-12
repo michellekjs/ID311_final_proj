@@ -2,6 +2,7 @@ class ButtonDoor{
   constructor(bx, by,bw, bh, cx, cy,  cw, ch) {
     this.box = null; // pushed by the player
     this.cliff = null; // 
+    this.cliff2 =  null;
     this.button = null;
     this.bx = bx;
     this.by = by;
@@ -16,8 +17,9 @@ class ButtonDoor{
 
   create() {
     this.box = createSprite(this.bx, this.by, this.bw, this.bh);
-    this.cliff = createSprite(this.cx, this.cy, this.cw, this.ch);
-    this.button = createSprite(this.cx+20, this.cy-this.ch/2,50, 20);
+    this.cliff = createSprite(this.cx, this.cy, this.cw, this.ch/2);
+    this.cliff2 = createSprite(this.cx, this.cy - this.ch/2, this.cw, this.ch/2);
+    this.button = createSprite(this.cx+20, this.cy-this.ch +50 ,50, 20);
   }
   
   // openEntrance() {
@@ -27,13 +29,10 @@ class ButtonDoor{
 
 
   ispressed(player) {
-    // console.log(player.position.y - this.box.position.y ,this.bh/2+ this.ch/2)
     if (-player.position.y + this.box.position.y < this.bh/2) {
-      console.log("Displace")
       player.displace(this.box);
     }
     else {
-      console.log("collide")
       player.collide(this.box)
     }
     
@@ -43,6 +42,14 @@ class ButtonDoor{
       this.button.height = 10;
       this.buttondown  = true;
       // 버튼이 눌리면 어떤 작업을 할지 여기에 작성
+      if (this.cy - this.ch/2 -100 < this.cliff2.position.y){
+        this.cliff2.position.y = this.cliff2.position.y - 1 * (deltaTime / 20);
+      }
+      if (this.cy - this.ch/2 -150 < this.cliff2.position.y){
+        this.cliff2.position.y = this.cliff2.position.y - 1 * (deltaTime / 20);
+        this.button.position.y = this.cliff2.position.y -this.ch/2 + 50
+      }
+  
     }
     else {
       this.button.height = 20;

@@ -25,14 +25,18 @@ class PitFill{
       this.button.height = 20;
       this.button.position.y = this.by+15;
       if (this.dir == "v") {
-        console.log("Vertical movement")
-        this.pit.position.y = this.py - this.dist;
+        if (this.pit.position.y > this.py - this.dist){
+          this.pit.position.y = this.pit.position.y - 1 * (deltaTime / 20);
+        }
       }
       else if (this.dir == "h") {
-        console.log("Horizontal movement")
         this.pit.position.x = this.px - this.dist;
       }
       
+    }
+    else {
+      // this.button.height = this.bh;
+      // this.button.position.y = this.by+15;
     }
   }
 }
