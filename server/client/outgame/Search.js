@@ -64,7 +64,7 @@ function randomSearch() {
 
 function moveWaitroom() {
     const nickname = sessionStorage.getItem('nickname');
-    window.location.href = "../waitroom?nickname=" + nickname + "&random=" + String(isRandom) + (isRandom ? "" : ("&partner=" + String(searchfriend.value)));
+    window.location.href = "../waitroom?nickname=" + nickname + "&random=" + String(isRandom) + (isRandom ? "" : ("&partner=" + String(searchfriend.value())));
 }
 
 
