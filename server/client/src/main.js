@@ -4,20 +4,30 @@ let gameMap;
 let playerGroup;
 let grabCase = false;
 const wallD = 50;
-let pitFill, buttonDoor, gameEnd;
+let pitFill, buttonDoor, gameEnd, tunnel;
+let elapsedTime = 0;
 
 setup = function() {
     createCanvas(800, 600);
     const gameClient = GameClient.getInstance();
     gameClient.connect();
+    setInterval(updateTime, 500);
 
     //create pitfill sprite
-    pitFill = new PitFill(width-100, height-50, 100, 50,width-200, height-50, 50, 50, "v", 100);
+    pitFill = new PitFill(width-100, height-25, 100, 50,width-200, height-25, 50, 50, "v", 100);
     pitFill.create();
 
     //button click and entrance appears
-    buttonDoor = new ButtonDoor(width + 100, height-50, 50, 120,width+ 300, height-50, 200, 200);
+    buttonDoor = new ButtonDoor(width + 100, height-50, 50, 100,width+ 300, height-50, 200, 200);
     buttonDoor.create();
+
+    //Spring 
+    spring = new Spring(width + 600, height-50);
+    spring.create();
+
+    //tunnel
+    tunnel = new Tunnel(width+ 1200, height-50, 200,200);
+    tunnel.create();
 
     //initiate players
     playerGroup = new Group();
@@ -28,8 +38,8 @@ setup = function() {
 
 
     //game end sprite initialize
-    gameEnd = new GameEnd(width + 500, height-50);
-    gameEnd.create();
+    // gameEnd = new GameEnd(width + 500, height-50);
+    // gameEnd.create();
 
     //map initiating
     createMap();
@@ -38,18 +48,28 @@ setup = function() {
 draw = function() {
     background(100);
     drawMap();
+    fill(255);
+    textSize(50)
+    text(elapsedTime, camera.position.x + 300, myChar.player.position.y-350);
+
     fill(255, 0, 0);
     noStroke();
     rectMode(CENTER);
     camera.position.x = myChar.player.position.x;
-    camera.position.y = myChar.player.position.y;
+    camera.position.y = myChar.player.position.y - height/2 + 200;
+    //score (time) counting
+
 
     //pitfill rendering 
     pitFill.ispressed(myChar.player);
     //buttondoor rendering 
     buttonDoor.ispressed(myChar.player);
     //gameend button activated
-    gameEnd.activate(myChar.player);
+    // gameEnd.activate(myChar.player);
+    //spring
+    spring.activate(myChar.player);
+    //tunnel
+    tunnel.activate(myChar.player);
 
     //player movement
     playerGroup.collide(gameMap);
@@ -72,13 +92,12 @@ draw = function() {
     partnerChar.update();
 
     partnerChar.syncPosition();//지금은 안사용
-
     fill(0, 255, 0);
 }
 
 createMap = function() {
     gameMap = new Group();
-    bottomWall = createSprite(width, height, width*4, wallD);
+    bottomWall = createSprite(width, height+50, width*10, 100);
     bottomWall.immovable = true;
     bottomWall.debug = true;
     topWall = createSprite(width, 0, width*2, wallD);
@@ -103,7 +122,11 @@ createMap = function() {
     gameMap.add(buttonDoor.cliff);
     gameMap.add(buttonDoor.cliff2);
     gameMap.add(buttonDoor.button);
-    gameMap.add(gameEnd.end);
+    gameMap.add(spring.box);
+    gameMap.add(tunnel.tunnel);
+    gameMap.add(tunnel.beforebutton);
+    gameMap.add(tunnel.afterbutton);
+    // gameMap.add(gameEnd.end);
     gameMap.add(bottomWall);
     gameMap.add(topWall);
     gameMap.add(leftWall);
@@ -133,4 +156,8 @@ function keyPressed() {
 
 drawMap = function() {
     drawSprites(gameMap);
+}
+
+updateTime = function() {
+    elapsedTime = elapsedTime+ 1
 }
