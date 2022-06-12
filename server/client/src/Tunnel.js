@@ -13,8 +13,8 @@ class Tunnel{
 
   create() {
     this.tunnel = createSprite(this.bx, this.by, this.bw, this.bh);
-    this.beforebutton = createSprite(this.bx -200, this.by-80, 50, 20);
-    this.afterbutton = createSprite(this.bx +200, this.by-60, 50, 20);
+    this.beforebutton = createSprite(this.bx -200, this.by-120, 50, 20);
+    this.afterbutton = createSprite(this.bx +200, this.by-120, 50, 20);
   }
   
   activate(player) {
@@ -22,7 +22,7 @@ class Tunnel{
     player.collide(this.afterbutton);
     // console.log(player.position.x , this.beforebutton.position.x)
     console.log(this.afterpressed);
-    if ((player.touching.top) && (player.position.x < this.beforebutton.position.x + 40)&& (player.position.x > this.beforebutton.position.x -40)) {
+    if ((player.touching.top) && (player.position.x < this.beforebutton.position.x + 100)&& (player.position.x > this.beforebutton.position.x -100)) {
       this.beforebutton.height = 10;
       this.beforepressed = true;
     }
@@ -34,7 +34,7 @@ class Tunnel{
 
     if (this.beforepressed) {
       if (this.tunnel.position.y > this.by-300){
-        this.tunnel.position.y = this.tunnel.position.y - 1 * (deltaTime / 20);
+        this.tunnel.position.y = this.tunnel.position.y - 1 * (deltaTime / 10);
       }
     }
 

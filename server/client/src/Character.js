@@ -51,7 +51,7 @@ class Character {
     jump(){
         if (!this.jumping) {
             console.log("jump");
-            this.player.velocity.y = -8;
+            this.player.velocity.y = -40;
         }
         else if(this.name == "small"){
             console.log(this.secondJump);
@@ -108,9 +108,10 @@ class Character {
         }
     }
     grab(partnerPos) {
+        console.log(this.name)
         if(this.name == "big"){
             if(!this.nowGrab){
-                if(dist(this.player.position.x,this.player.position.y,partnerPos.x,partnerPos.y)<60){
+                if(dist(this.player.position.x,this.player.position.y,partnerPos.x,partnerPos.y)<120){
                     console.log("grab");
                     this.nowGrab = true;
                 }

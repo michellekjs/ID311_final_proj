@@ -4,8 +4,8 @@ class PitFill{
     this.pit = null;
     this.bx = bx;
     this.by = by;
-    this.bw = bw;
-    this.bh = bh;
+    this.bw = 100;
+    this.bh = 50;
     this.px = px;
     this.py = py; 
     this.pw = pw;
@@ -25,7 +25,7 @@ class PitFill{
       this.button.height = 20;
       this.button.position.y = this.by+15;
       if (this.dir == "v") {
-        if (this.pit.position.y > this.py - this.dist){
+        if (this.pit.position.y > height+50){
           this.pit.position.y = this.pit.position.y - 1 * (deltaTime / 20);
         }
       }
