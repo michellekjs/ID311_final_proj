@@ -2,11 +2,11 @@ class Character {
     constructor(tag, name) {
         this.tag = tag
         if(name == "small"){
-            this.height = 50;
+            this.height = 100;
         }else{
-            this.height =100;
+            this.height =200;
         }
-        this.width = 50;
+        this.width = 100;
         this.vX = 0;
         this.vY = 0;
         this.gravity = 0.3;

@@ -8,7 +8,7 @@ let pitFill, buttonDoor, gameEnd, tunnel;
 let elapsedTime = 0;
 
 setup = function() {
-    createCanvas(800, 600);
+    createCanvas(windowWidth, windowHeight);
     const gameClient = GameClient.getInstance();
     gameClient.connect();
     setInterval(updateTime, 500);
@@ -35,11 +35,9 @@ setup = function() {
     partnerChar = new Character('partner',"small");
     playerGroup.add(myChar.player);
     playerGroup.add(partnerChar.player);
-
-
     //game end sprite initialize
-    // gameEnd = new GameEnd(width + 500, height-50);
-    // gameEnd.create();
+    gameEnd = new GameEnd(width + 500, height-50);
+    gameEnd.create();
 
     //map initiating
     createMap();
@@ -56,7 +54,7 @@ draw = function() {
     noStroke();
     rectMode(CENTER);
     camera.position.x = myChar.player.position.x;
-    camera.position.y = myChar.player.position.y - height/2 + 200;
+    camera.position.y = myChar.player.position.y - height/2 + 300;
     //score (time) counting
 
 
@@ -65,7 +63,7 @@ draw = function() {
     //buttondoor rendering 
     buttonDoor.ispressed(myChar.player);
     //gameend button activated
-    // gameEnd.activate(myChar.player);
+    gameEnd.activate(myChar.player);
     //spring
     spring.activate(myChar.player);
     //tunnel
@@ -115,7 +113,6 @@ createMap = function() {
     block1.debug = true;
 
     //add pitfill to the gamemap
-
     gameMap.add(pitFill.button);
     gameMap.add(pitFill.pit);
     gameMap.add(buttonDoor.box);
@@ -126,7 +123,8 @@ createMap = function() {
     gameMap.add(tunnel.tunnel);
     gameMap.add(tunnel.beforebutton);
     gameMap.add(tunnel.afterbutton);
-    // gameMap.add(gameEnd.end);
+
+    gameMap.add(gameEnd.end);
     gameMap.add(bottomWall);
     gameMap.add(topWall);
     gameMap.add(leftWall);
