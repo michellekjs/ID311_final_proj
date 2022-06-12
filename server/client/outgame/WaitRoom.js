@@ -2,6 +2,13 @@
 // import openlock from '../assets/icon/openlock.png';
 let lockd = true;
 
+//UI
+let button;
+let crown;
+
+let nickname1 = "Nickname1";
+let nickname2 = "Nickname2";
+
 //localstorage
 function preload() {
     font = loadFont('../assets/font/coolveticarg.otf');
@@ -16,6 +23,7 @@ function setup() {
     waitRoomClient.connect();
     waitRoomClient.addRPC('outgame-sync', (args) => {
         const params = JSON.parse(args);
+        applyRoomInfo(params);
     });
 
     waitRoomClient.addRPC('outgame-start', (args) => {
@@ -47,7 +55,7 @@ function setup() {
         lock = createImg('../assets/icon/openlock.png');
     }
     lock.position(windowWidth - 80, 50);
-    lock.mousePressed(changeImage)
+    lock.mousePressed(pressLock);
 
     crown = createImg('../assets/icon/crown.png');
     crown.position(windowWidth / 3 - 40, 80);
@@ -67,8 +75,8 @@ function draw() {
     textSize(40)
     fill(255)
     textSize(30)
-    text("Nickname1", windowWidth / 3, 200)
-    text("Nickname2", windowWidth * 2 / 3, 200)
+    text(nickname1, windowWidth / 3, 200)
+    text(nickname2, windowWidth * 2 / 3, 200)
 
     textAlign(CENTER);
     text("Tutorial", windowWidth - 160, 80)
@@ -86,13 +94,6 @@ function draw() {
 
 }
 
-function pressReady() {
-    const waitRoomClient = WaitRoomClient.getInstance();
-    waitRoomClient.sendMessage('outgame-input', {
-        input: OUTGAME_INPUT.READY
-    });
-}
-
 function moveMain() {
     const nickname = sessionStorage.getItem('nickname');
     window.location.href = "../game?nickname=" + nickname;
@@ -107,6 +108,45 @@ function myCheckedEvent() {
         console.log('Checking!');
     } else {
         console.log('Unchecking!');
+    }
+}
+
+// Network
+function pressReady() {
+    const waitRoomClient = WaitRoomClient.getInstance();
+    waitRoomClient.sendMessage('outgame-input', {
+        input: OUTGAME_INPUT.READY
+    });
+}
+
+function pressLock() {
+    const waitRoomClient = WaitRoomClient.getInstance();
+    waitRoomClient.sendMessage('outgame-input', {
+        input: OUTGAME_INPUT.SET_PRIVATE
+    });
+}
+
+function pressSwap() {
+    const waitRoomClient = WaitRoomClient.getInstance();
+    waitRoomClient.sendMessage('outgame-input', {
+        input: OUTGAME_INPUT.SWAP
+    });
+}
+
+function applyRoomInfo(roomInfo) {
+    const isPrivate = roomInfo.isPrivate;
+    const player1 = roomInfo.player1;
+    const player2 = roomInfo.player2;
+
+    nickname1 = player1.nickname;
+    nickname2 = player2.nickname;
+
+    lockd = isPrivate;
+
+    if (player1.isHost) {
+        crown.position(windowWidth / 3 - 40, 80);
+    } else {
+        crown.position(windowWidth * 2 / 3 - 40, 80);
     }
 }
 

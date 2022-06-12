@@ -107,6 +107,15 @@ class Room {
         }
         return null;
     }
+
+    getInfo() {
+        const roomInfo = {
+            isPrivate: this.isPrivate,
+            player1: this.getPlayerInfo(0),
+            player2: this.getPlayerInfo(1)
+        };
+        return roomInfo;
+    }
 }
 
 class PlayerConnection {
@@ -330,13 +339,7 @@ io.on('connection', (socket) => {
             const player = routePlayers.getPlayer(nickname);
             const room = player.getRoom();
 
-            const roomInfo = {
-                isPrivate: room.isPrivate,
-                player1: room.getPlayerInfo(0),
-                player2: room.getPlayerInfo(1)
-            };
-
-            room.spreadMessageAll('outgame-sync', roomInfo);
+            room.spreadMessageAll('outgame-sync', room.getInfo());
         }
     });
 
@@ -358,12 +361,7 @@ io.on('connection', (socket) => {
                 player.pressReady();
                 if (partner != null) {
                     if (partner.ready) {
-                        const roomInfo = {
-                            isPrivate: room.isPrivate,
-                            player1: room.getPlayerInfo(0),
-                            player2: room.getPlayerInfo(1)
-                        };
-                        room.spreadMessageAll('outgame-start', roomInfo);
+                        room.spreadMessageAll('outgame-start', room.getInfo());
                     }
                 }
                 break;
@@ -375,13 +373,7 @@ io.on('connection', (socket) => {
                 break;
         }
 
-        const roomInfo = {
-            isPrivate: room.isPrivate,
-            player1: room.getPlayerInfo(0),
-            player2: room.getPlayerInfo(1)
-        };
-
-        room.spreadMessageAll('outgame-sync', roomInfo);
+        room.spreadMessageAll('outgame-sync', room.getInfo());
     });
 
     // Ingame messages
