@@ -24,7 +24,8 @@ setup = function() {
     tunnel.create();
 
     //pushing  box
-    bigbox = createSprite(width * 2 + 500, height - 100, 200, 200);
+    bigbox = new BigBox('bigbox-1', width * 2 + 500, height - 100, 200, 200);
+    bigbox.create();
     //after box in-air step & button
     airstep = createSprite(width * 3 + 100, height - 350, 200, 50);
     airstep2 = createSprite(width * 3 + 300, height - 500, 200, 50);
@@ -95,11 +96,8 @@ draw = function() {
     // spring.activate(myChar.player);
     //tunnel
     tunnel.activate(myChar.player);
-    myChar.player.displace(bigbox);
 
-    if (bigbox.collide(bottomWall3)) {
-        bigbox.immovable = true;
-    }
+    bigbox.activate(myChar, bottomWall3);
 
     airbutton.collide(gameMap);
     airbutton.immovable = true;
@@ -202,7 +200,7 @@ createMap = function() {
     gameMap.add(bottomWall);
     gameMap.add(bottomWall2);
     gameMap.add(bottomWall3);
-    gameMap.add(bigbox);
+    gameMap.add(bigbox.box);
     gameMap.add(leftWall);
     gameMap.add(airstep);
     gameMap.add(airstep2);
