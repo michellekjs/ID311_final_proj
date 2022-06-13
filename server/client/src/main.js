@@ -8,6 +8,8 @@ let pitFill, buttonDoor, gameEnd, tunnel;
 let elapsedTime = 0;
 
 setup = function() {
+    const windowWidth = 1600;
+    const windowHeight = 1200;
     createCanvas(windowWidth, windowHeight);
     const gameClient = GameClient.getInstance();
     gameClient.connect();
@@ -132,9 +134,8 @@ draw = function() {
     myChar.playerMove(); // partnerChar.playerMove();
 
     myChar.update();
-    partnerChar.update();
+    partnerChar.syncPosition();
 
-    partnerChar.syncPosition(); //지금은 안사용
     fill(0, 255, 0);
 }
 
@@ -143,6 +144,8 @@ createMap = function() {
     bottomWall = createSprite(width / 2, height + 50, width, wallD);
     bottomWall.immovable = true;
     bottomWall.debug = true;
+
+    console.log(bottomWall);
 
     bottomWall2 = createSprite(width * 2 + width / 4, height + 50, width * 3 / 2, wallD);
     bottomWall2.immovable = true;
