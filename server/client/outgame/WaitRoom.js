@@ -5,6 +5,8 @@ let lockd = true;
 //UI
 let button;
 let crown;
+let lock_open;
+let lock_closed;
 
 let nickname1 = "Nickname1";
 let nickname2 = "Nickname2";
@@ -48,14 +50,22 @@ function setup() {
     button.style('font-family', 'coolveticarg');
     button.mousePressed(pressReady);
 
+    lock_open = createImg('../assets/icon/openlock.png');
+    lock_open.position(windowWidth - 80, 50);
+    lock_open.mousePressed(pressLock);
+
+    lock_closed = createImg('../assets/icon/closelock.png');
+    lock_closed.style('color', 'rgb(255,255,255)')
+    lock_closed.position(windowWidth - 80, 50);
+    lock_closed.mousePressed(pressLock);
+
     if (lockd) {
-        lock = createImg('../assets/icon/closelock.png');
-        lock.style('color', 'rgb(255,255,255)')
+        lock_open.hide();
+        lock_closed.show();
     } else {
-        lock = createImg('../assets/icon/openlock.png');
+        lock_open.show();
+        lock_closed.hide();
     }
-    lock.position(windowWidth - 80, 50);
-    lock.mousePressed(pressLock);
 
     crown = createImg('../assets/icon/crown.png');
     crown.position(windowWidth / 3 - 40, 80);
@@ -99,10 +109,6 @@ function moveMain() {
     window.location.href = "../game?nickname=" + nickname;
 }
 
-function changeImage() {
-    lockd = !lockd
-}
-
 function myCheckedEvent() {
     if (checkbox.checked()) {
         console.log('Checking!');
@@ -142,6 +148,14 @@ function applyRoomInfo(roomInfo) {
     nickname2 = player2.nickname;
 
     lockd = isPrivate;
+
+    if (lockd) {
+        lock_open.hide();
+        lock_closed.show();
+    } else {
+        lock_open.show();
+        lock_closed.hide();
+    }
 
     if (player1.isHost) {
         crown.position(windowWidth / 3 - 40, 80);
