@@ -34,7 +34,11 @@ class Character {
         drawSprite(this.player);
     }
 
-    checkJump() {
+    checkJump(partner) {
+        if (partner.nowGrab) {
+            this.jumping = true;
+            return;
+        }
         // console.log(this.player.touching.bottom);
         if (this.player.touching.bottom) {
             this.jumping = false;
@@ -48,7 +52,10 @@ class Character {
         }
     }
 
-    jump() {
+    jump(partner) {
+        if (partner.nowGrab) {
+            return;
+        }
         if (!this.jumping) {
             console.log("jump");
             this.player.velocity.y = -40;
@@ -60,7 +67,10 @@ class Character {
             }
         }
     }
-    playerMove() {
+    playerMove(partner) {
+        if (partner.nowGrab) {
+            return;
+        }
         if (keyIsDown(RIGHT_ARROW)) {
             this.player.addSpeed(0.2, 0);
         }

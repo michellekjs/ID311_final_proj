@@ -123,15 +123,15 @@ draw = function() {
     } else if (myChar.nowGrab) {
         myChar.player.overlap(partnerChar.player);
     }
-    myChar.checkJump();
-    partnerChar.checkJump();
+    myChar.checkJump(partnerChar);
+    partnerChar.checkJump(myChar);
     myChar.checkGrab(partnerChar); //myChar가 작은 팽귄
     partnerChar.checkGrab(myChar);
 
     myChar.drawPlayer();
     partnerChar.drawPlayer();
 
-    myChar.playerMove();
+    myChar.playerMove(partnerChar);
 
     myChar.update();
     partnerChar.syncPosition();
