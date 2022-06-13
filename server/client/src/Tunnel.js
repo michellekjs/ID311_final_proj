@@ -42,7 +42,6 @@ class Tunnel extends Gimmick {
         }
 
         if (this.afterpressed) {
-            console.log("pressed")
             this.tunnel.remove();
         }
     }
