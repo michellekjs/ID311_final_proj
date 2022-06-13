@@ -194,7 +194,7 @@ createMap = function() {
 function keyPressed() {
     if (keyCode == 38) { //uparrow
         console.log("uparrow");
-        myChar.jump();
+        myChar.jump(partnerChar);
     } else if (keyCode == 71) { //g
         console.log("g");
         if (grabCase) {

@@ -21,6 +21,8 @@ class Character {
         this.player.maxSpeed = 15;
         this.name = name;
 
+        this.prevGrabbedDir = 1;
+
         this.network = new CharacterNetwork(tag);
     }
     drawPlayer() {
@@ -35,7 +37,7 @@ class Character {
     }
 
     checkJump(partner) {
-        if (partner.nowGrab) {
+        if (partner.nowGrab && this.name == 'small') {
             this.jumping = true;
             return;
         }
@@ -53,7 +55,7 @@ class Character {
     }
 
     jump(partner) {
-        if (partner.nowGrab) {
+        if (partner.nowGrab && this.name == 'small') {
             return;
         }
         if (!this.jumping) {
@@ -137,10 +139,14 @@ class Character {
     checkGrab(partner) {
         if (this.name == "small") {
             if (partner.nowGrab) {
-                if (partner.player.deltaX < 0) {
+                if (partner.player.deltaX < -0.001) {
                     this.player.position.x = partner.player.position.x - 10; //겹치면 collide 문제 발생
-                } else {
+                    this.prevGrabbedDir = -1;
+                } else if (partner.player.deltaX > 0.001) {
                     this.player.position.x = partner.player.position.x + 10;
+                    this.prevGrabbedDir = 1;
+                } else {
+                    this.player.position.x = partner.player.position.x + 10 * this.prevGrabbedDir;
                 }
                 this.player.position.y = partner.player.position.y - this.height;
                 // this.jumping=false;
