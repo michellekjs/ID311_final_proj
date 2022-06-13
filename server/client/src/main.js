@@ -116,6 +116,11 @@ draw = function() {
         }
     }
 
+    //player fall
+    if (myChar.player.position.y > height + 100) {
+        myChar.restart();
+    }
+
     //player movement
     playerGroup.collide(gameMap);
     if (!myChar.nowGrab) {

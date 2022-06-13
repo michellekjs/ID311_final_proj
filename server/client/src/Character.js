@@ -25,6 +25,10 @@ class Character {
 
         this.network = new CharacterNetwork(tag);
     }
+    restart() {
+        this.player.position.x = width / 2 + (this.name == 'small' ? 50 : (-50));
+        this.player.position.y = 100;
+    }
     drawPlayer() {
         if (this.jumping) {
             // console.log("jumping");
