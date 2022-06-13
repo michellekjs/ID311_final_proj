@@ -26,15 +26,18 @@ class Tunnel extends Gimmick {
         if ((player.touching.top) && (player.position.x < this.beforebutton.position.x + 100) && (player.position.x > this.beforebutton.position.x - 100)) {
             this.beforebutton.height = 10;
             this.beforepressed = true;
+            this.markDirty();
         } else if ((player.touching.top)) {
             this.afterbutton.height = 10;
             this.afterpressed = true;
+            this.markDirty();
         }
 
 
         if (this.beforepressed) {
             if (this.tunnel.position.y > this.by - 300) {
                 this.tunnel.position.y = this.tunnel.position.y - 1 * (deltaTime / 10);
+                this.markDirty();
             }
         }
 
@@ -45,11 +48,17 @@ class Tunnel extends Gimmick {
     }
     getSyncData() {
         const params = {
-
+            beforebuttonHeight: this.beforebutton.height,
+            beforebuttonPressed: this.beforepressed,
+            afterbuttonHeight: this.afterbutton.height,
+            afterbuttonPressed: this.afterpressed
         };
         return params;
     }
     syncRemote(params) {
-
+        this.beforebutton.height = params.beforebuttonHeight;
+        this.beforepressed = params.beforebuttonPressed;
+        this.afterbutton.height = params.afterbuttonHeight;
+        this.afterpressed = params.afterbuttonPressed;
     }
 }

@@ -44,8 +44,8 @@ class GimmickManager {
         const gimmickManager = this;
         this.gimmicks = [];
 
-        gameClient.addRPC('ingame-sync-gimmick', (args) => {
-            gimmickManager.routeSyncData(JSON.parse(args));
+        gameClient.addRPC('ingame-sync-gimmick', (params) => {
+            gimmickManager.routeSyncData(params);
         })
     }
     addGimmick(target) {
