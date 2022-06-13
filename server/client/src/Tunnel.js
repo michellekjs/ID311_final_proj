@@ -22,7 +22,7 @@ class Tunnel extends Gimmick {
         player.collide(this.beforebutton);
         player.collide(this.afterbutton);
         // console.log(player.position.x , this.beforebutton.position.x)
-        console.log(this.afterpressed);
+        //console.log(this.afterpressed);
         if ((player.touching.top) && (player.position.x < this.beforebutton.position.x + 100) && (player.position.x > this.beforebutton.position.x - 100)) {
             this.beforebutton.height = 10;
             this.beforepressed = true;

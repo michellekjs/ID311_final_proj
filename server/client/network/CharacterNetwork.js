@@ -3,6 +3,7 @@ class CharacterNetwork {
         this.tag = tag
         this.posX = 0;
         this.posY = 0;
+        this.nowGrab = false;
         if (tag == 'partner') {
             const gameClient = GameClient.getInstance();
             const self = this;
@@ -18,11 +19,17 @@ class CharacterNetwork {
         this.update();
     }
 
+    setGrab(nowGrab) {
+        this.nowGrab = nowGrab;
+        this.update();
+    }
+
     update() {
         const gameClient = GameClient.getInstance();
         const syncData = {
             posX: this.posX,
-            posY: this.posY
+            posY: this.posY,
+            nowGrab: this.nowGrab
         };
         gameClient.sendMessage('ingame-sync', syncData);
     }
@@ -30,5 +37,6 @@ class CharacterNetwork {
     sync(self, syncData) {
         self.posX = syncData.posX;
         self.posY = syncData.posY;
+        self.nowGrab = syncData.nowGrab;
     }
 }

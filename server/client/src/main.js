@@ -131,7 +131,7 @@ draw = function() {
     myChar.drawPlayer();
     partnerChar.drawPlayer();
 
-    myChar.playerMove(); // partnerChar.playerMove();
+    myChar.playerMove();
 
     myChar.update();
     partnerChar.syncPosition();

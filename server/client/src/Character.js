@@ -99,6 +99,7 @@ class Character {
         const network = this.network;
         this.player.position.x = network.posX;
         this.player.position.y = network.posY;
+        this.nowGrab = network.nowGrab;
     }
 
     fly(partner) {
@@ -107,15 +108,17 @@ class Character {
         }
     }
     grab(partnerPos) {
-        console.log(this.name)
+        const network = this.network;
         if (this.name == "big") {
             if (!this.nowGrab) {
                 if (dist(this.player.position.x, this.player.position.y, partnerPos.x, partnerPos.y) < 120) {
                     console.log("grab");
                     this.nowGrab = true;
+                    network.setGrab(this.nowGrab);
                 }
             } else if (this.nowGrab) {
                 this.nowGrab = false;
+                network.setGrab(this.nowGrab);
             }
             return this.nowGrab;
         }
