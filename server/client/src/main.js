@@ -134,7 +134,19 @@ draw = function() {
     myChar.playerMove(partnerChar);
 
     myChar.update();
+
+    const prevNowGrab = partnerChar.nowGrab;
     partnerChar.syncPosition();
+
+    if (prevNowGrab && partnerChar.name == 'big') {
+        if (!partnerChar.nowGrab) {
+            if (partnerChar.prevGrabbedDir < 0) {
+                myChar.player.setSpeed(30, -135);
+            } else {
+                myChar.player.setSpeed(30, -45);
+            }
+        }
+    }
 
     fill(0, 255, 0);
 }
@@ -197,13 +209,13 @@ function keyPressed() {
         myChar.jump(partnerChar);
     } else if (keyCode == 71) { //g
         console.log("g");
-        if (grabCase) {
+        /*if (grabCase) {
             if (partnerChar.player.deltaX < 0) {
                 partnerChar.player.setSpeed(30, -135);
             } else {
                 partnerChar.player.setSpeed(30, -45);
             }
-        }
+        }*/
         grabCase = myChar.grab(partnerChar.player.position);
     } else if (keyCode == 80) {
         console.log("p");
