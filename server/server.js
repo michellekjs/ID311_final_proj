@@ -394,7 +394,18 @@ io.on('connection', (socket) => {
         }
 
         room.spreadMessage(nickname, 'ingame-sync', params);
-    })
+    });
+
+    socket.on('ingame-sync-gimmick', (args) => {
+        const params = JSON.parse(args);
+        const room = player.getRoom();
+
+        if (room == null) {
+            return;
+        }
+
+        room.spreadMessage(nickname, 'ingame-sync-gimmick', params);
+    });
 
     socket.on('disconnect', () => {
         player.removeSocket();

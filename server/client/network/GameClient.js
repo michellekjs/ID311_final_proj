@@ -38,6 +38,8 @@ class GameClient {
     addRPC(tag, func) {
         const client = this.client;
 
-        client.on(tag, func);
+        client.on(tag, (args) => {
+            func(JSON.parse(args));
+        });
     }
 }

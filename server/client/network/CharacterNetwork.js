@@ -7,8 +7,8 @@ class CharacterNetwork {
             const gameClient = GameClient.getInstance();
             const self = this;
 
-            gameClient.addRPC('ingame-sync', (arg) => {
-                self.sync(self, arg);
+            gameClient.addRPC('ingame-sync', (params) => {
+                self.sync(self, params);
             });
         }
     }
@@ -27,8 +27,7 @@ class CharacterNetwork {
         gameClient.sendMessage('ingame-sync', syncData);
     }
 
-    sync(self, arg) {
-        const syncData = JSON.parse(arg);
+    sync(self, syncData) {
         self.posX = syncData.posX;
         self.posY = syncData.posY;
     }
