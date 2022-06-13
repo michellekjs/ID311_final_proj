@@ -97,7 +97,7 @@ draw = function() {
     //tunnel
     tunnel.activate(myChar.player);
 
-    bigbox.activate(myChar, bottomWall3);
+    bigbox.activate(myChar, bottomWall3, gameMap);
 
     airbutton.collide(gameMap);
     airbutton.immovable = true;

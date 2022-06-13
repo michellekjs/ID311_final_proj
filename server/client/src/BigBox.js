@@ -11,9 +11,10 @@ class BigBox extends Gimmick {
     create() {
         this.box = createSprite(this.bx, this.by, this.bw, this.bh);
     }
-    activate(character, wall) {
+    activate(character, wall, gameMap) {
         if (character.name == 'big') {
             if (character.player.displace(this.box)) {
+                this.box.collide(gameMap);
                 this.markDirty();
             }
         }
