@@ -163,8 +163,14 @@ class PlayerConnection {
         this.socket = socket;
     }
 
+    removeSocket() {
+        this.socket = null;
+    }
+
     sendMeesage(msg, args) {
-        this.socket.emit(msg, JSON.stringify(args));
+        if (this.socket != null) {
+            this.socket.emit(msg, JSON.stringify(args));
+        }
     }
     getPartner() {
         return this.room.getPartner(this.nickname);
@@ -323,6 +329,7 @@ io.on('connection', (socket) => {
     // socket information
     let socketType = SOCKET_TYPE.NONE;
     let nickname = null;
+    let player = null;
 
     // init socket information
     socket.on('init', (arg) => {
@@ -332,7 +339,7 @@ io.on('connection', (socket) => {
 
         console.log("socket init for " + String(nickname));
 
-        const player = routePlayers.getPlayer(nickname);
+        player = routePlayers.getPlayer(nickname);
         player.setSocket(socket);
 
         if (socketType == SOCKET_TYPE.OUTGAME) {
@@ -347,7 +354,7 @@ io.on('connection', (socket) => {
     socket.on('outgame-input', (args) => {
         console.log('input from ' + String(nickname));
         const params = JSON.parse(args);
-        const player = routePlayers.getPlayer(nickname);
+
         const partner = player.getPartner();
         const input = params.input;
         const room = player.getRoom();
@@ -377,53 +384,20 @@ io.on('connection', (socket) => {
     });
 
     // Ingame messages
+    socket.on('ingame-sync', (args) => {
+        const params = JSON.parse(args);
+        const room = player.getRoom();
+
+        if (room == null) {
+            return;
+        }
+
+        room.spreadMessage(nickname, 'ingame-sync', params);
+    })
 
     socket.on('disconnect', () => {
-        // TODO
+        player.removeSocket();
     });
-    /*const newConnection = new PlayerClient(idPool, socket, 0);
-    idPool++;
-    if (connectedUsers.length >= 1) {
-        for (let i = 0; i < connectedUsers.length; i++) {
-            const previousUser = connectedUsers[i];
-            if (!previousUser.getPartner()) {
-                previousUser.setPartner(newConnection);
-                newConnection.setPartner(previousUser);
-                break;
-            }
-        }
-    }
-    connectedUsers.push(newConnection);
-
-
-    socket.on('disconnect', () => {
-        console.log('a user disconnected');
-        // Remove from array
-        for (let i = 0; i < connectedUsers.length; i++) {
-            if (connectedUsers[i].id == newConnection.id) {
-                connectedUsers.splice(i, 1);
-                break;
-            }
-        }
-        const partner = newConnection.getPartner();
-        if (partner) {
-            partner.setPartner(null);
-        }
-        newConnection.setPartner(null);
-    });
-    socket.on('ping', (arg) => {
-        console.log('Received ping: ' + String(arg));
-
-        socket.emit('pong', 'hi!');
-    });
-    socket.on('sync', (data) => {
-        newConnection.setData(data);
-        const partner = newConnection.getPartner();
-
-        if (partner) {
-            partner.socket.emit('sync', data);
-        }
-    })*/
 });
 
 server.listen(PORT, () => {
