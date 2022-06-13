@@ -141,9 +141,9 @@ draw = function() {
     if (prevNowGrab && partnerChar.name == 'big') {
         if (!partnerChar.nowGrab) {
             if (partnerChar.prevGrabbedDir < 0) {
-                myChar.player.setSpeed(30, -135);
+                myChar.player.setSpeed(120, -135);
             } else {
-                myChar.player.setSpeed(30, -45);
+                myChar.player.setSpeed(120, -45);
             }
         }
     }
