@@ -60,10 +60,10 @@ class Room {
         if (index < this.count) {
             const target = this.players[index];
             let role = 'none';
-            if (target.role == PLAYER_ROLE.BIG) {
+            if (target.playerRole == PLAYER_ROLE.BIG) {
                 role = 'big';
-            } else if (target.role == PLAYER_ROLE.SMALL) {
-                role = small;
+            } else if (target.playerRole == PLAYER_ROLE.SMALL) {
+                role = 'small';
             }
             return {
                 isEmpty: false,
@@ -309,11 +309,13 @@ app.get('/waitroom', (req, res) => {
     room.addPlayer(playerConnection);
     const playerPartner = playerConnection.getPartner();
     if (playerPartner != null) {
-        if (playerPartner.role == PLAYER_ROLE.BIG) {
+        if (playerPartner.playerRole == PLAYER_ROLE.BIG) {
             playerConnection.setRole(PLAYER_ROLE.SMALL);
-        } else if (playerPartner.role == PLAYER_ROLE.SMALL) {
+        } else {
             playerConnection.setRole(PLAYER_ROLE.BIG);
         }
+    } else {
+        playerConnection.setRole(PLAYER_ROLE.BIG);
     }
 })
 
@@ -343,7 +345,6 @@ io.on('connection', (socket) => {
         player.setSocket(socket);
 
         if (socketType == SOCKET_TYPE.OUTGAME) {
-            const player = routePlayers.getPlayer(nickname);
             const room = player.getRoom();
 
             room.spreadMessageAll('outgame-sync', room.getInfo());
