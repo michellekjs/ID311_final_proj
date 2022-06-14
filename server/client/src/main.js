@@ -62,30 +62,30 @@ function preload() {
 }
 
 setup = function() {
-    const windowWidth = 1600;
-    const windowHeight = 1200;
+    //const windowWidth = 1600;
+    //const windowHeight = 1200;
     createCanvas(windowWidth, windowHeight);
     const gameClient = GameClient.getInstance();
     gameClient.connect();
     setInterval(updateTime, 500);
 
     //create pitfill sprite
-    pitFill = new PitFill('pitfill-1', width + 900, height - 25, 50, 50, width + width / 4, height + 300, width / 2, wallD, "v", 250);
+    pitFill = new PitFill('pitfill-1', 2500, 1175, 50, 50, 2000, 1500, 800, wallD, "v", 250);
     pitFill.create();
 
-    pitFill2 = new PitFill('pitfill-2', width * 3 + 900, height - 650, 100, 50, width * 3 + 100, height - 500, 200, 50, 'v', -200);
+    pitFill2 = new PitFill('pitfill-2', 5700, 550, 100, 50, 4900, 700, 200, 50, 'v', -200);
     pitFill2.create();
 
     //tunnel
-    tunnel = new Tunnel('tunnel-1', width + 1400, height - 600, 200, 1200, 110);
+    tunnel = new Tunnel('tunnel-1', 3000, 600, 200, 1200, 110);
     tunnel.create();
 
     //pushing  box
-    bigbox = new BigBox('bigbox-1', width * 2 + 500, height - 100, 200, 200);
+    bigbox = new BigBox('bigbox-1', 3700, 1100, 200, 200);
     bigbox.create();
     //after box in-air step & button
-    airstep2 = createSprite(width * 3 + 300, height - 500, 200, 50);
-    airplane = createSprite(width * 4, height - 600, width, 50);
+    airstep2 = createSprite(5100, 700, 200, 50);
+    airplane = createSprite(6400, 600, 1600, 50);
 
 
 
@@ -94,7 +94,7 @@ setup = function() {
     // buttonDoor.create();
 
     //Spring 
-    spring = new Spring(width * 4, height - 650, 100, 50, 45);
+    spring = new Spring(4800, 550, 100, 50, 45);
     spring.create();
 
     // read session data
@@ -156,7 +156,7 @@ draw = function() {
     bigbox.activate(myChar, bottomWall3, gameMap);
 
     //player fall
-    if (myChar.player.position.y > height + 100) {
+    if (myChar.player.position.y > 1300) {
         myChar.restart();
     }
 
@@ -200,28 +200,28 @@ draw = function() {
 
 createMap = function() {
     gameMap = new Group();
-    bottomWall = createSprite(width / 2, height + 50, width, wallD);
+    bottomWall = createSprite(800, 1250, 1600, wallD);
     bottomWall.immovable = true;
     bottomWall.debug = true;
 
     console.log(bottomWall);
 
-    bottomWall2 = createSprite(width * 2 + width / 4, height + 50, width * 3 / 2, wallD);
+    bottomWall2 = createSprite(3600, 1250, 2400, wallD);
     bottomWall2.immovable = true;
     bottomWall2.debug = true;
 
-    bottomWall3 = createSprite(width * 2 + width, height, 100, wallD);
+    bottomWall3 = createSprite(4800, 1200, 100, wallD);
     bottomWall3.immovable = true;
     bottomWall3.debug = true;
 
-    leftWall = createSprite(0, height / 2, wallD, height);
+    leftWall = createSprite(0, 600, wallD, 1200);
     leftWall.immovable = true;
     leftWall.debug = true;
-    rightWall = createSprite(width * 2, height / 2, wallD, height);
+    rightWall = createSprite(3200, 600, wallD, 1200);
     rightWall.immovable = true;
     rightWall.debug = true;
 
-    block1 = createSprite(width / 1.5, height / 1.5, width / 2, wallD);
+    block1 = createSprite(1600 / 1.5, 800, 800, wallD);
     block1.immovable = true;
     block1.debug = true;
 

@@ -15,7 +15,7 @@ class Character {
             this.secondJump = false;
         }
         this.nowGrab = false;
-        this.player = createSprite(width / 2 + (name == 'small' ? 50 : (-50)), 100, this.width, this.height);
+        this.player = createSprite(800 + (name == 'small' ? 50 : (-50)), 100, this.width, this.height);
         this.player.debug = true;
         this.player.friction = 0.01;
         this.player.maxSpeed = 60;
@@ -102,7 +102,7 @@ class Character {
         }
     }
     restart() {
-        this.player.position.x = width / 2 + (this.name == 'small' ? 50 : (-50));
+        this.player.position.x = 800 + (this.name == 'small' ? 50 : (-50));
         this.player.position.y = 100;
     }
     drawPlayer() {
