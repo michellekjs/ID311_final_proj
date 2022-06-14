@@ -18,12 +18,12 @@ class Character {
         this.player = createSprite(width / 2 + (name == 'small' ? 50 : (-50)), 100, this.width, this.height);
         this.player.debug = true;
         this.player.friction = 0.01;
-        this.player.maxSpeed = 15;
+        this.player.maxSpeed = 60;
         this.name = name;
 
-        this.prevGrabbedDir = 1;
-
         this.network = new CharacterNetwork(tag);
+
+        this.direction = 'right';
     }
     restart() {
         this.player.position.x = width / 2 + (this.name == 'small' ? 50 : (-50));
@@ -64,7 +64,7 @@ class Character {
         }
         if (!this.jumping) {
             console.log("jump");
-            this.player.velocity.y = -40;
+            this.player.velocity.y = -15;
         } else if (this.name == "small") {
             console.log(this.secondJump);
             if (!this.secondJump) {
@@ -74,18 +74,34 @@ class Character {
         }
     }
     playerMove(partner) {
+        const prevSpeed = this.player.getSpeed();
+        const prevDirection = this.player.getDirection();
+        const v_x = prevSpeed * Math.cos(prevDirection / 180 * Math.PI);
+        const v_y = prevSpeed * Math.sin(prevDirection / 180 * Math.PI);
+
+        let result_x = v_x;
+        let result_direction;
+
+        let keyPressed = false;
+
         if (partner.nowGrab) {
             return;
         }
         if (keyIsDown(RIGHT_ARROW)) {
-            this.player.addSpeed(0.2, 0);
+            result_x += 0.2;
+            this.direction = 'right';
+            this.network.setDirection('right');
+            keyPressed = true;
         }
         // else if (keyIsDown(DOWN_ARROW)) {
         //     this.player.addSpeed(0.2, 270);
         //     console.log(this.player.velocity)
         // }
         else if (keyIsDown(LEFT_ARROW)) {
-            this.player.addSpeed(0.2, 180);
+            result_x -= 0.2;
+            this.direction = 'left';
+            this.network.setDirection('left');
+            keyPressed = true;
         }
         // else if (keyIsDown(UP_ARROW)) {
         //     if (!this.jumping) {
@@ -102,6 +118,31 @@ class Character {
         //         }
         //     }
         // }
+        if (keyPressed) {
+            if (result_x > 5) {
+                result_x = 5;
+            }
+            if (result_x < -5) {
+                result_x = -5;
+            }
+
+            if (result_x == 0) {
+                if (v_y > 0) {
+                    result_direction = 90;
+                } else {
+                    result_direction = -90;
+                }
+            } else if (result_x > 0) {
+                result_direction = Math.atan(v_y / result_x) / Math.PI * 180;
+            } else {
+                result_direction = Math.atan(v_y / result_x) / Math.PI * 180 + 180;
+            }
+
+            this.player.setSpeed(
+                Math.sqrt(result_x * result_x + v_y * v_y),
+                result_direction
+            );
+        }
         this.update();
     }
 
@@ -116,6 +157,7 @@ class Character {
         this.player.position.x = network.posX;
         this.player.position.y = network.posY;
         this.nowGrab = network.nowGrab;
+        this.direction = network.direction;
     }
 
     fly(partner) {
@@ -143,14 +185,10 @@ class Character {
     checkGrab(partner) {
         if (this.name == "small") {
             if (partner.nowGrab) {
-                if (partner.player.deltaX < -0.001) {
+                if (partner.direction == 'left') {
                     this.player.position.x = partner.player.position.x - 10; //겹치면 collide 문제 발생
-                    this.prevGrabbedDir = -1;
-                } else if (partner.player.deltaX > 0.001) {
-                    this.player.position.x = partner.player.position.x + 10;
-                    this.prevGrabbedDir = 1;
                 } else {
-                    this.player.position.x = partner.player.position.x + 10 * this.prevGrabbedDir;
+                    this.player.position.x = partner.player.position.x + 10;
                 }
                 this.player.position.y = partner.player.position.y - this.height;
                 // this.jumping=false;

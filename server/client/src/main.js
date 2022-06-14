@@ -4,7 +4,7 @@ let gameMap;
 let playerGroup;
 let grabCase = false;
 const wallD = 100;
-let pitFill, pitFill2, buttonDoor, gameEnd, tunnel;
+let pitFill, pitFill2, buttonDoor, gameEnd, tunnel, spring;
 let elapsedTime = 0;
 
 setup = function() {
@@ -40,8 +40,8 @@ setup = function() {
     // buttonDoor.create();
 
     //Spring 
-    // spring = new Spring(width + 600, height-50);
-    // spring.create();
+    spring = new Spring(width * 4, height - 650, 100, 50, 45);
+    spring.create();
 
     // read session data
     const roomInfo = JSON.parse(sessionStorage.getItem('room-info'));
@@ -95,7 +95,7 @@ draw = function() {
     //gameend button activated
     // gameEnd.activate(myChar.player);
     //spring
-    // spring.activate(myChar.player);
+    spring.activate(myChar.player);
     //tunnel
     tunnel.activate(myChar.player);
 
@@ -130,10 +130,10 @@ draw = function() {
 
     if (prevNowGrab && partnerChar.name == 'big') {
         if (!partnerChar.nowGrab) {
-            if (partnerChar.prevGrabbedDir < 0) {
-                myChar.player.setSpeed(120, -135);
+            if (partnerChar.direction == 'left') {
+                myChar.player.setSpeed(30, -135);
             } else {
-                myChar.player.setSpeed(120, -45);
+                myChar.player.setSpeed(30, -45);
             }
         }
     }
@@ -180,7 +180,7 @@ createMap = function() {
     // gameMap.add(buttonDoor.cliff);
     // gameMap.add(buttonDoor.cliff2);
     // gameMap.add(buttonDoor.button);
-    // gameMap.add(spring.box);
+    gameMap.add(spring.box);
     gameMap.add(tunnel.tunnel);
     gameMap.add(tunnel.beforebutton);
     gameMap.add(tunnel.afterbutton);
