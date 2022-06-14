@@ -94,7 +94,7 @@ setup = function() {
     // buttonDoor.create();
 
     //Spring 
-    spring = new Spring(4800, 550, 100, 50, 45);
+    spring = new Spring(6400, 550, 100, 50, 45);
     spring.create();
 
     // read session data
@@ -224,6 +224,11 @@ createMap = function() {
     block1 = createSprite(1600 / 1.5, 800, 800, wallD);
     block1.immovable = true;
     block1.debug = true;
+
+    flyingWall = createSprite(3600, 0, 2400, wallD);
+    flyingWall.immovable = true;
+    flyingWall.debug = true;
+    gameMap.add(flyingWall);
 
     //add pitfill to the gamemap
     gameMap.add(pitFill.button);
