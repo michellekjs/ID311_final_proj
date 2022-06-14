@@ -1,5 +1,5 @@
 class Tunnel extends Gimmick {
-    constructor(id, bx, by, bw, bh) {
+    constructor(id, bx, by, bw, bh, dist) {
         super(id);
         this.tunnel = null;
         this.afterbutton = null;
@@ -10,12 +10,14 @@ class Tunnel extends Gimmick {
         this.bh = bh;
         this.beforepressed = false;
         this.afterpressed = false;
+
+        this.dist = dist;
     }
 
     create() {
         this.tunnel = createSprite(this.bx, this.by, this.bw, this.bh);
-        this.beforebutton = createSprite(this.bx - 200, this.by - 120, 50, 20);
-        this.afterbutton = createSprite(this.bx + 200, this.by - 120, 50, 20);
+        this.beforebutton = createSprite(this.bx - this.bw / 2 - 100, this.by + this.bh / 2 - 220, 50, 20);
+        this.afterbutton = createSprite(this.bx + this.bw / 2 + 100, this.by + this.bh / 2 - 220, 50, 20);
     }
 
     activate(player) {
@@ -35,7 +37,7 @@ class Tunnel extends Gimmick {
 
 
         if (this.beforepressed) {
-            if (this.tunnel.position.y > this.by - 300) {
+            if (this.tunnel.position.y > this.by - this.dist) {
                 this.tunnel.position.y = this.tunnel.position.y - 1 * (deltaTime / 10);
                 this.markDirty();
             }

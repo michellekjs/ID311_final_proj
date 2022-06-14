@@ -24,19 +24,24 @@ class PitFill extends Gimmick {
     ispressed(player) {
         player.collide(this.button);
         if ((player.touching.bottom) && (this.bx - this.bw < player.position.x) && (player.position.x < this.bx + this.bw)) {
+            if (this.button.height != 20 || this.button.position.y != this.by + 15) {
+                this.markDirty();
+            }
             this.button.height = 20;
             this.button.position.y = this.by + 15;
             if (this.dir == "v") {
-                if (this.pit.position.y > height + 50) {
+                if (this.pit.position.y > this.py - this.dist) {
                     this.pit.position.y = this.pit.position.y - 1 * (deltaTime / 20);
+                    this.markDirty();
                 }
             } else if (this.dir == "h") {
-                this.pit.position.x = this.px - this.dist;
+                if (this.pit.position.x > this.px - this.dist) {
+                    this.pit.position.x = this.pit.position.x - 1 * (deltaTime / 20);
+                    this.markDirty();
+                }
             }
-            this.markDirty();
-        } else {
-            // this.button.height = this.bh;
-            // this.button.position.y = this.by+15;
+
+            this.dt = 0;
         }
     }
 

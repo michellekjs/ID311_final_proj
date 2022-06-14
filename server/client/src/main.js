@@ -16,11 +16,11 @@ setup = function() {
     setInterval(updateTime, 500);
 
     //create pitfill sprite
-    pitFill = new PitFill('pitfill-1', width + 600, height - 25, 50, 50, width + width / 4, height + 100, width / 2, wallD, "v", 100);
+    pitFill = new PitFill('pitfill-1', width + 900, height - 25, 50, 50, width + width / 4, height + 300, width / 2, wallD, "v", 300);
     pitFill.create();
 
     //tunnel
-    tunnel = new Tunnel('tunnel-1', width + 1200, height - 100, 200, 200);
+    tunnel = new Tunnel('tunnel-1', width + 1400, height - 600, 200, 1200, 110);
     tunnel.create();
 
     //pushing  box
