@@ -24,6 +24,82 @@ class Character {
         this.network = new CharacterNetwork(tag);
 
         this.direction = 'right';
+        this.keyPressed = false;
+
+        this.dt = 0;
+        this.spriteDuration = 125;
+        this.spriteNum = 0;
+
+        this.initAnimation();
+    }
+    initAnimation() {
+        if (this.name == 'big') {
+            this.addImages('default', preloadedImages.penguin2.standing);
+            this.addImages('holding', preloadedImages.penguin2.holding);
+            this.addImages('falling', preloadedImages.penguin2.holding);
+            this.addImages('walking', preloadedImages.penguin2.walking);
+        } else {
+            this.addImages('default', preloadedImages.penguin1.standing);
+            this.addImages('holding', preloadedImages.penguin1.falling);
+            this.addImages('falling', preloadedImages.penguin1.falling);
+            this.addImages('walking', preloadedImages.penguin1.walking);
+        }
+    }
+    updateAnimation() {
+        let state = 'default';
+        this.dt += deltaTime;
+
+        if (this.keyPressed) {
+            state = 'walking';
+        }
+
+        if (this.name == 'big' && this.nowGrab) {
+            state = 'holding';
+        }
+
+        if (this.name == 'small' && this.jumping) {
+            state = 'falling';
+        }
+
+        if (this.dt > this.spriteDuration) {
+            this.dt -= this.spriteDuration;
+            const cnt = this.getSpriteCount(state);
+            this.spriteNum = (this.spriteNum + 1) % cnt;
+
+            this.player.changeImage(state + '-' + String(this.spriteNum));
+        }
+        this.player.mirrorX(this.direction == 'left' ? -1 : 1);
+    }
+    getSpriteCount(state) {
+        if (this.name == 'big') {
+            switch (state) {
+                case 'default':
+                    return 1;
+                case 'holding':
+                    return 4;
+                case 'falling':
+                    return 4;
+                case 'walking':
+                    return 4;
+            }
+        } else {
+            switch (state) {
+                case 'default':
+                    return 1;
+                case 'holding':
+                    return 1;
+                case 'falling':
+                    return 1;
+                case 'walking':
+                    return 4;
+            }
+        }
+    }
+    addImages(label, images) {
+        const player = this.player;
+        for (let i = 0; i < images.length; i++) {
+            player.addImage(label + '-' + String(i), images[i]);
+        }
     }
     restart() {
         this.player.position.x = width / 2 + (this.name == 'small' ? 50 : (-50));
@@ -37,23 +113,27 @@ class Character {
             // this.player.velocity.y = 0;
         }
         // console.log("vy = "+this.player.velocity.y);
+        this.updateAnimation();
         drawSprite(this.player);
     }
 
     checkJump(partner) {
         if (partner.nowGrab && this.name == 'small') {
             this.jumping = true;
+            this.network.setJumping(this.jumping);
             return;
         }
         // console.log(this.player.touching.bottom);
         if (this.player.touching.bottom) {
             this.jumping = false;
+            this.network.setJumping(this.jumping);
             if (this.name == "small") {
                 this.secondJump = false;
             }
             // console.log("checking ground")
         } else if (!this.player.touching.bottom) {
             this.jumping = true;
+            this.network.setJumping(this.jumping);
             // console.log("checking jumping")
         }
     }
@@ -82,7 +162,7 @@ class Character {
         let result_x = v_x;
         let result_direction;
 
-        let keyPressed = false;
+        this.keyPressed = false;
 
         if (partner.nowGrab) {
             return;
@@ -91,7 +171,7 @@ class Character {
             result_x += 0.2;
             this.direction = 'right';
             this.network.setDirection('right');
-            keyPressed = true;
+            this.keyPressed = true;
         }
         // else if (keyIsDown(DOWN_ARROW)) {
         //     this.player.addSpeed(0.2, 270);
@@ -101,7 +181,7 @@ class Character {
             result_x -= 0.2;
             this.direction = 'left';
             this.network.setDirection('left');
-            keyPressed = true;
+            this.keyPressed = true;
         }
         // else if (keyIsDown(UP_ARROW)) {
         //     if (!this.jumping) {
@@ -118,7 +198,7 @@ class Character {
         //         }
         //     }
         // }
-        if (keyPressed) {
+        if (this.keyPressed) {
             if (result_x > 5) {
                 result_x = 5;
             }
@@ -143,6 +223,7 @@ class Character {
                 result_direction
             );
         }
+        this.network.setKeyPressed(this.keyPressed);
         this.update();
     }
 
@@ -158,6 +239,8 @@ class Character {
         this.player.position.y = network.posY;
         this.nowGrab = network.nowGrab;
         this.direction = network.direction;
+        this.keyPressed = network.keyPressed;
+        this.jumping = network.jumping;
     }
 
     fly(partner) {

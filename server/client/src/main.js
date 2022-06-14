@@ -29,11 +29,11 @@ function preload() {
     preloadedImages.background.day = loadImage('./image/background/Map_day.jpg');
     preloadedImages.background.night = loadImage('./image/background/Map_night.jpg');
 
-    preloadedImages.egg.standing[0] = loadImage('./image/egg/egg1');
-    preloadedImages.egg.standing[1] = loadImage('./image/egg/egg2');
-    preloadedImages.egg.standing[2] = loadImage('./image/egg/egg3');
-    preloadedImages.egg.standing[3] = loadImage('./image/egg/egg4');
-    preloadedImages.egg.standing[4] = loadImage('./image/egg/egg5');
+    preloadedImages.egg.standing[0] = loadImage('./image/egg/egg1.png');
+    preloadedImages.egg.standing[1] = loadImage('./image/egg/egg2.png');
+    preloadedImages.egg.standing[2] = loadImage('./image/egg/egg3.png');
+    preloadedImages.egg.standing[3] = loadImage('./image/egg/egg4.png');
+    preloadedImages.egg.standing[4] = loadImage('./image/egg/egg5.png');
 
     preloadedImages.map.button = loadImage('./image/map/button.png');
     preloadedImages.map.horizontal_wall1 = loadImage('./image/map/horizontal_wall1.png');
@@ -50,15 +50,15 @@ function preload() {
     preloadedImages.penguin1.walking[2] = loadImage('./image/penguin1/p1w2.png');
     preloadedImages.penguin1.walking[3] = loadImage('./image/penguin1/p1w3.png');
 
-    preloadedImages.penguin2.standing[0] = loadImage('./image/penguin1/p2c1.png');
-    preloadedImages.penguin2.holding[0] = loadImage('./image/penguin1/p2h0.png');
-    preloadedImages.penguin2.holding[1] = loadImage('./image/penguin1/p2h1.png');
-    preloadedImages.penguin2.holding[2] = loadImage('./image/penguin1/p2h3.png');
-    preloadedImages.penguin2.holding[3] = loadImage('./image/penguin1/p2h4.png');
-    preloadedImages.penguin2.walking[0] = loadImage('./image/penguin1/p2w0.png');
-    preloadedImages.penguin2.walking[1] = loadImage('./image/penguin1/p2w1.png');
-    preloadedImages.penguin2.walking[2] = loadImage('./image/penguin1/p2w3.png');
-    preloadedImages.penguin2.walking[3] = loadImage('./image/penguin1/p2w4.png');
+    preloadedImages.penguin2.standing[0] = loadImage('./image/penguin2/p2c1.png');
+    preloadedImages.penguin2.holding[0] = loadImage('./image/penguin2/p2h0.png');
+    preloadedImages.penguin2.holding[1] = loadImage('./image/penguin2/p2h1.png');
+    preloadedImages.penguin2.holding[2] = loadImage('./image/penguin2/p2h3.png');
+    preloadedImages.penguin2.holding[3] = loadImage('./image/penguin2/p2h4.png');
+    preloadedImages.penguin2.walking[0] = loadImage('./image/penguin2/p2w0.png');
+    preloadedImages.penguin2.walking[1] = loadImage('./image/penguin2/p2w1.png');
+    preloadedImages.penguin2.walking[2] = loadImage('./image/penguin2/p2w3.png');
+    preloadedImages.penguin2.walking[3] = loadImage('./image/penguin2/p2w4.png');
 }
 
 setup = function() {
