@@ -4,7 +4,7 @@ let gameMap;
 let playerGroup;
 let grabCase = false;
 const wallD = 100;
-let pitFill, buttonDoor, gameEnd, tunnel;
+let pitFill, pitFill2, buttonDoor, gameEnd, tunnel;
 let elapsedTime = 0;
 
 setup = function() {
@@ -16,8 +16,11 @@ setup = function() {
     setInterval(updateTime, 500);
 
     //create pitfill sprite
-    pitFill = new PitFill('pitfill-1', width + 900, height - 25, 50, 50, width + width / 4, height + 300, width / 2, wallD, "v", 300);
+    pitFill = new PitFill('pitfill-1', width + 900, height - 25, 50, 50, width + width / 4, height + 300, width / 2, wallD, "v", 250);
     pitFill.create();
+
+    pitFill2 = new PitFill('pitfill-2', width * 3 + 900, height - 650, 100, 50, width * 3 + 100, height - 500, 200, 50, 'v', -200);
+    pitFill2.create();
 
     //tunnel
     tunnel = new Tunnel('tunnel-1', width + 1400, height - 600, 200, 1200, 110);
@@ -27,10 +30,8 @@ setup = function() {
     bigbox = new BigBox('bigbox-1', width * 2 + 500, height - 100, 200, 200);
     bigbox.create();
     //after box in-air step & button
-    airstep = createSprite(width * 3 + 100, height - 350, 200, 50);
     airstep2 = createSprite(width * 3 + 300, height - 500, 200, 50);
     airplane = createSprite(width * 4, height - 600, width, 50);
-    airbutton = createSprite(width * 3 + 600, height - 650, 100, 50);
 
 
 
@@ -88,6 +89,7 @@ draw = function() {
 
     //pitfill rendering 
     pitFill.ispressed(myChar.player);
+    pitFill2.ispressed(myChar.player);
     //buttondoor rendering 
     // buttonDoor.ispressed(myChar.player);
     //gameend button activated
@@ -98,21 +100,6 @@ draw = function() {
     tunnel.activate(myChar.player);
 
     bigbox.activate(myChar, bottomWall3, gameMap);
-
-    airbutton.collide(gameMap);
-    airbutton.immovable = true;
-    if (airbutton.collide(myChar.player) && (airbutton.position.x - 100 < myChar.player.x) && (airbutton.position.x + 100 > myChar.player.x)) {
-        console.log("JH")
-        airbutton.height = 25;
-        if (airstep.position.y < height - 300) {
-            airstep.position.y = airstep.position.y + deltaTime / 20
-        }
-    } else {
-        airbutton.height = 25;
-        if (airstep.position.y > height - 500) {
-            airstep.position.y = airstep.position.y - deltaTime / 20
-        }
-    }
 
     //player fall
     if (myChar.player.position.y > height + 100) {
@@ -187,6 +174,8 @@ createMap = function() {
     //add pitfill to the gamemap
     gameMap.add(pitFill.button);
     gameMap.add(pitFill.pit);
+    gameMap.add(pitFill2.button);
+    gameMap.add(pitFill2.pit);
     // gameMap.add(buttonDoor.box);
     // gameMap.add(buttonDoor.cliff);
     // gameMap.add(buttonDoor.cliff2);
@@ -202,10 +191,8 @@ createMap = function() {
     gameMap.add(bottomWall3);
     gameMap.add(bigbox.box);
     gameMap.add(leftWall);
-    gameMap.add(airstep);
     gameMap.add(airstep2);
     gameMap.add(airplane);
-    gameMap.add(airbutton);
     // gameMap.add(rightWall);
 }
 

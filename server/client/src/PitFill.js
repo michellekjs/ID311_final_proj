@@ -30,13 +30,13 @@ class PitFill extends Gimmick {
             this.button.height = 20;
             this.button.position.y = this.by + 15;
             if (this.dir == "v") {
-                if (this.pit.position.y > this.py - this.dist) {
-                    this.pit.position.y = this.pit.position.y - 1 * (deltaTime / 20);
+                if ((this.dist > 0 && (this.pit.position.y > this.py - this.dist)) || (this.dist < 0 && (this.pit.position.y < this.py - this.dist))) {
+                    this.pit.position.y = this.pit.position.y + (this.dist > 0 ? (-1 * (deltaTime / 20)) : (1 * (deltaTime / 20)));
                     this.markDirty();
                 }
             } else if (this.dir == "h") {
-                if (this.pit.position.x > this.px - this.dist) {
-                    this.pit.position.x = this.pit.position.x - 1 * (deltaTime / 20);
+                if ((this.dist > 0 && (this.pit.position.x > this.px - this.dist)) || (this.dist < 0 && (this.pit.position.x < this.px - this.dist))) {
+                    this.pit.position.x = this.pit.position.x + (this.dist > 0 ? (-1 * (deltaTime / 20)) : (1 * (deltaTime / 20)));
                     this.markDirty();
                 }
             }
