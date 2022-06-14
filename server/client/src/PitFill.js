@@ -19,6 +19,9 @@ class PitFill extends Gimmick {
     create() {
         this.button = createSprite(this.bx, this.by, this.bw, this.bh);
         this.pit = createSprite(this.px, this.py, this.pw, this.ph);
+
+        // this.button.addImage(preloadedImages.map.button);
+        // this.pit.addImage(preloadedImages.map.horizontal_wall2);
     }
 
     ispressed(player) {

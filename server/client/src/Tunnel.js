@@ -18,6 +18,10 @@ class Tunnel extends Gimmick {
         this.tunnel = createSprite(this.bx, this.by, this.bw, this.bh);
         this.beforebutton = createSprite(this.bx - this.bw / 2 - 100, this.by + this.bh / 2 - 220, 50, 20);
         this.afterbutton = createSprite(this.bx + this.bw / 2 + 100, this.by + this.bh / 2 - 220, 50, 20);
+
+        // this.tunnel.addImage(preloadedImages.map.horizontal_wall2);
+        // this.beforebutton.addImage(preloadedImages.map.button);
+        // this.afterbutton.addImage(preloadedImages.map.button);
     }
 
     activate(player) {

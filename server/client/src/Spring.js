@@ -10,6 +10,7 @@ class Spring {
 
     create() {
         this.box = createSprite(this.bx, this.by, this.bw, this.bh);
+        // this.box.addImage(preloadedImages.map.button);
     }
 
     activate(player) {
