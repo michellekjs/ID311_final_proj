@@ -23,6 +23,7 @@ class Room {
         this.max = max;
         this.isPrivate = false;
         this.host = null;
+        this.end = false;
     }
     setHost(host) {
         this.host = host;
@@ -115,6 +116,36 @@ class Room {
             player2: this.getPlayerInfo(1)
         };
         return roomInfo;
+    }
+
+    gameEnd(params) {
+        if (this.end) {
+            return;
+        }
+        const player1 = this.getPlayerInfo(0);
+        const player2 = this.getPlayerInfo(1);
+        const score = params.score;
+        // read previous score info
+        const prevData = JSON.parse(fs.readFileSync(scorePath).toString());
+
+        // add score info
+        prevData.data.push({
+            player1: player1.nickname,
+            player2: player2.nickname,
+            score: score
+        });
+
+        // sort score info
+        prevData.data.sort((d1, d2) => {
+            return d1.score - d2.score;
+        });
+
+        const strData = JSON.stringify(prevData);
+
+        fs.writeFileSync(scorePath, strData);
+        fs.writeFileSync(path.join(publicDir, 'outgame/Score.js'), 'const score = ' + strData);
+
+        this.end = true;
     }
 }
 
@@ -269,6 +300,9 @@ const PORT = 3001;
 const routePlayers = new RoutePlayers();
 const rooms = new Rooms();
 
+const fs = require('fs');
+const scorePath = path.join(publicDir, 'score.json');
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(publicDir, 'index.html'));
 });
@@ -322,6 +356,11 @@ app.get('/waitroom', (req, res) => {
 app.get('/game', (req, res) => {
     const nickname = String(req.query.nickname);
     res.sendFile(path.join(publicDir, 'game.html'));
+})
+
+app.get('/gameover', (req, res) => {
+    const score = String(req.query.score);
+    res.sendFile(path.join(publicDir, 'gameover.html'));
 })
 
 app.use('/', express.static(publicDir));
@@ -406,6 +445,18 @@ io.on('connection', (socket) => {
 
         room.spreadMessage(nickname, 'ingame-sync-gimmick', params);
     });
+
+    socket.on('ingame-game-end', (args) => {
+        const params = JSON.parse(args);
+        const room = player.getRoom();
+
+        if (room == null) {
+            return;
+        }
+
+        room.spreadMessageAll('ingame-game-end', params);
+        room.gameEnd(params);
+    })
 
     socket.on('disconnect', () => {
         player.removeSocket();
