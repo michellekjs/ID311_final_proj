@@ -35,13 +35,30 @@ function preload() {
     preloadedImages.egg.standing[3] = loadImage('./image/egg/egg4.png');
     preloadedImages.egg.standing[4] = loadImage('./image/egg/egg5.png');
 
-    preloadedImages.map.button = loadImage('./image/map/button.png');
-    preloadedImages.map.horizontal_wall1 = loadImage('./image/map/horizontal_wall1.png');
-    preloadedImages.map.horizontal_wall2 = loadImage('./image/map/horizontal_wall2.png');
-    preloadedImages.map.horizontal_wall3 = loadImage('./image/map/horizontal_wall3.png');
+    //preloadedImages.map.button = loadImage('./image/map/button.png');
+    //preloadedImages.map.horizontal_wall1 = loadImage('./image/map/horizontal_wall1.png');
+    //preloadedImages.map.horizontal_wall2 = loadImage('./image/map/horizontal_wall2.png');
+    //preloadedImages.map.horizontal_wall3 = loadImage('./image/map/horizontal_wall3.png');
     preloadedImages.map.igloo = loadImage('./image/map/igloo.png');
-    preloadedImages.map.trap = loadImage('./image/map/trap.png');
-    preloadedImages.map.vertical_wall = loadImage('./image/map/vertical_wall.png');
+    //preloadedImages.map.trap = loadImage('./image/map/trap.png');
+    //preloadedImages.map.vertical_wall = loadImage('./image/map/vertical_wall.png');
+
+    preloadedImages.map.airplane = loadImage('./image/additionalmap/airplane.png');
+    preloadedImages.map.airstep2 = loadImage('./image/additionalmap/airstep2.png');
+    preloadedImages.map.block1 = loadImage('./image/additionalmap/block1.png');
+    preloadedImages.map.bottomWall = loadImage('./image/additionalmap/bottomWall.png');
+    preloadedImages.map.bottomWall2 = loadImage('./image/additionalmap/bottomWall2.png');
+    preloadedImages.map.bottomWall3 = loadImage('./image/additionalmap/bottomWall3.png');
+    preloadedImages.map.box = loadImage('./image/additionalmap/box.png');
+    preloadedImages.map.button = loadImage('./image/additionalmap/button.png');
+    preloadedImages.map.button2 = loadImage('./image/additionalmap/button2.png');
+    preloadedImages.map.flyingWall = loadImage('./image/additionalmap/flyingWall.png');
+    preloadedImages.map.pitFill2_block = loadImage('./image/additionalmap/pitfill2_block.png');
+    preloadedImages.map.spring = loadImage('./image/additionalmap/spring.png');
+    preloadedImages.map.tunnel_afterbutton = loadImage('./image/additionalmap/tunnel_afterbutton.png');
+    preloadedImages.map.tunnel_beforebutton = loadImage('./image/additionalmap/tunnel_beforebutton.png');
+    preloadedImages.map.tunnel_block = loadImage('./image/additionalmap/tunnel_block.png');
+    preloadedImages.map.vertWall = loadImage('./image/additionalmap/vertWall.png');
 
     preloadedImages.penguin1.standing[0] = loadImage('./image/penguin1/p1c1.png');
     preloadedImages.penguin1.falling[0] = loadImage('./image/penguin1/p1f1.png');
@@ -72,20 +89,30 @@ setup = function() {
     //create pitfill sprite
     pitFill = new PitFill('pitfill-1', 2500, 1175, 50, 50, 2000, 1500, 800, wallD, "v", 250);
     pitFill.create();
+    pitFill.button.addImage(preloadedImages.map.button);
+    pitFill.pit.addImage(preloadedImages.map.block1);
 
     pitFill2 = new PitFill('pitfill-2', 5700, 550, 100, 50, 4900, 700, 200, 50, 'v', -200);
     pitFill2.create();
+    pitFill2.button.addImage(preloadedImages.map.button);
+    pitFill2.pit.addImage(preloadedImages.map.pitFill2_block);
 
     //tunnel
     tunnel = new Tunnel('tunnel-1', 3000, 600, 200, 1200, 110);
     tunnel.create();
+    tunnel.beforebutton.addImage(preloadedImages.map.tunnel_beforebutton);
+    tunnel.afterbutton.addImage(preloadedImages.map.tunnel_afterbutton);
+    tunnel.tunnel.addImage(preloadedImages.map.tunnel_block);
 
     //pushing  box
     bigbox = new BigBox('bigbox-1', 3700, 1100, 200, 200);
     bigbox.create();
+    bigbox.box.addImage(preloadedImages.map.box);
     //after box in-air step & button
     airstep2 = createSprite(5100, 700, 200, 50);
+    airstep2.addImage(preloadedImages.map.airstep2);
     airplane = createSprite(6400, 600, 1600, 50);
+    airplane.addImage(preloadedImages.map.airplane);
 
 
 
@@ -96,6 +123,7 @@ setup = function() {
     //Spring 
     spring = new Spring(6400, 550, 100, 50, 45);
     spring.create();
+    spring.box.addImage(preloadedImages.map.spring);
 
     // read session data
     const roomInfo = JSON.parse(sessionStorage.getItem('room-info'));
@@ -201,31 +229,38 @@ draw = function() {
 createMap = function() {
     gameMap = new Group();
     bottomWall = createSprite(800, 1250, 1600, wallD);
+    bottomWall.addImage(preloadedImages.map.bottomWall);
     bottomWall.immovable = true;
     bottomWall.debug = true;
 
     console.log(bottomWall);
 
     bottomWall2 = createSprite(3600, 1250, 2400, wallD);
+    bottomWall2.addImage(preloadedImages.map.bottomWall2);
     bottomWall2.immovable = true;
     bottomWall2.debug = true;
 
     bottomWall3 = createSprite(4800, 1200, 100, wallD);
+    bottomWall3.addImage(preloadedImages.map.bottomWall3);
     bottomWall3.immovable = true;
     bottomWall3.debug = true;
 
     leftWall = createSprite(0, 600, wallD, 1200);
+    leftWall.addImage(preloadedImages.map.vertWall);
     leftWall.immovable = true;
     leftWall.debug = true;
     rightWall = createSprite(3200, 600, wallD, 1200);
+    rightWall.addImage(preloadedImages.map.vertWall);
     rightWall.immovable = true;
     rightWall.debug = true;
 
     block1 = createSprite(1600 / 1.5, 800, 800, wallD);
+    block1.addImage(preloadedImages.map.block1);
     block1.immovable = true;
     block1.debug = true;
 
     flyingWall = createSprite(3600, 0, 2400, wallD);
+    flyingWall.addImage(preloadedImages.map.flyingWall);
     flyingWall.immovable = true;
     flyingWall.debug = true;
     gameMap.add(flyingWall);
