@@ -17,7 +17,6 @@ function setup() {
     searchfriend.style('height', '80px');
     searchfriend.style('font-family', 'coolveticarg');
     searchfriend.style('font-size', '20px');
-    searchfriend.style('color', '#F7F7F7');
 
 
     button = createButton('Search');
