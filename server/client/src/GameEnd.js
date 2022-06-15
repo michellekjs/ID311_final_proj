@@ -8,10 +8,11 @@ class GameEnd {
 
     create() {
         this.end = createSprite(this.x, this.y, 500, 300);
+        this.end.addImage(preloadedImages.map.igloo);
 
         const gameClient = GameClient.getInstance();
-        gameClient.addRPC('ingame-game-end', (args) => {
-            window.location.href = "../gameover?score=" + String(JSON.parse(args).score);
+        gameClient.addRPC('ingame-game-end', (params) => {
+            window.location.href = "../gameover?score=" + String(params.score);
         });
     }
 

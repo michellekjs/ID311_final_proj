@@ -119,7 +119,7 @@ setup = function() {
     playerGroup.add(myChar.player);
     playerGroup.add(partnerChar.player);
     //game end sprite initialize
-    gameEnd = new GameEnd(3600, 0);
+    gameEnd = new GameEnd(3600, -200);
     gameEnd.create();
 
     //map initiating
