@@ -1,3 +1,4 @@
+//import fs from "node:fs";
 function preload() {
     font = loadFont('../assets/font/coolveticarg.otf');
 }
@@ -17,6 +18,10 @@ function setup() {
     startButton.style('font-size', '50px')
     startButton.style('font-weight', 'bold')
     startButton.style('font-family', 'coolveticarg')
+
+    // read scores
+    //scores = JSON.parse(fs.readFileSync('../score.json').toString()).data;
+    console.log(score);
 }
 
 function draw() {
@@ -29,7 +34,14 @@ function draw() {
     text('Leader Board', 3 * windowWidth / 4, windowHeight / 2 - 400)
     rect(3 * windowWidth / 4, windowHeight / 2 - 80, 400, 600, 20)
 
-
+    // display scores
+    fill(0);
+    for (let i = 0; i < score.data.length; i++) {
+        const col = score.data[i];
+        text(col.player1, 3 * windowWidth / 4 - 120, windowHeight / 2 - 400 + 50 * (i + 1));
+        text(col.player2, 3 * windowWidth / 4, windowHeight / 2 - 400 + 50 * (i + 1));
+        text(col.score, 3 * windowWidth / 4 + 120, windowHeight / 2 - 400 + 50 * (i + 1));
+    }
 }
 
 //

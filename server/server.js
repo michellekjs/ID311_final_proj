@@ -140,7 +140,10 @@ class Room {
             return d1.score - d2.score;
         });
 
-        fs.writeFileSync(scorePath, JSON.stringify(prevData));
+        const strData = JSON.stringify(prevData);
+
+        fs.writeFileSync(scorePath, strData);
+        fs.writeFileSync(path.join(publicDir, 'outgame/Score.js'), 'const score = ' + strData);
 
         this.end = true;
     }
