@@ -355,6 +355,11 @@ app.get('/game', (req, res) => {
     res.sendFile(path.join(publicDir, 'game.html'));
 })
 
+app.get('/gameover', (req, res) => {
+    const score = String(req.query.score);
+    res.sendFile(path.join(publicDir, 'gameover.html'));
+})
+
 app.use('/', express.static(publicDir));
 
 io.on('connection', (socket) => {

@@ -10,8 +10,8 @@ class GameEnd {
         this.end = createSprite(this.x, this.y, 500, 300);
 
         const gameClient = GameClient.getInstance();
-        gameClient.addRpc('ingame-game-end', (args) => {
-            window.location.href = "../gameover.html";
+        gameClient.addRPC('ingame-game-end', (args) => {
+            window.location.href = "../gameover?score=" + String(JSON.parse(args).score);
         });
     }
 
@@ -21,7 +21,7 @@ class GameEnd {
             gameClient.sendMessage('ingame-game-end', {
                 score: elapsedTime
             });
-            window.location.href = "../gameover.html"
+            window.location.href = "../gameover?score=" + String(elapsedTime);
         }
     }
 
