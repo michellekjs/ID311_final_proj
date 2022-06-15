@@ -119,8 +119,8 @@ setup = function() {
     playerGroup.add(myChar.player);
     playerGroup.add(partnerChar.player);
     //game end sprite initialize
-    // gameEnd = new GameEnd(width + 500, height-50);
-    // gameEnd.create();
+    gameEnd = new GameEnd(3600, 0);
+    gameEnd.create();
 
     //map initiating
     createMap();
@@ -147,7 +147,7 @@ draw = function() {
     //buttondoor rendering 
     // buttonDoor.ispressed(myChar.player);
     //gameend button activated
-    // gameEnd.activate(myChar.player);
+    gameEnd.activate(myChar.player, partnerChar.player);
     //spring
     spring.activate(myChar.player);
     //tunnel
@@ -244,7 +244,7 @@ createMap = function() {
     gameMap.add(tunnel.beforebutton);
     gameMap.add(tunnel.afterbutton);
 
-    // gameMap.add(gameEnd.end);
+    gameMap.add(gameEnd.end);
     gameMap.add(bottomWall);
     gameMap.add(bottomWall2);
     gameMap.add(bottomWall3);
