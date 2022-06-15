@@ -23,11 +23,6 @@ class ButtonDoor extends Gimmick {
         this.button = createSprite(this.cx + 20, this.cy - this.ch + 50, 50, 20);
     }
 
-    // openEntrance() {
-    //   this.
-    // }
-
-
 
     ispressed(player) {
         if (-player.position.y + this.box.position.y < this.bh / 2) {
