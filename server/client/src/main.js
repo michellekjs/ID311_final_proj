@@ -81,6 +81,7 @@ function preload() {
 setup = function() {
     //const windowWidth = 1600;
     //const windowHeight = 1200;
+    bg = loadImage('../../../image/background/Map_night.jpg');
     createCanvas(windowWidth, windowHeight);
     const gameClient = GameClient.getInstance();
     gameClient.connect();
@@ -155,7 +156,7 @@ setup = function() {
 }
 
 draw = function() {
-    background(100);
+    background(bg);
     drawMap();
     fill(255);
     textSize(50)
@@ -231,38 +232,38 @@ createMap = function() {
     bottomWall = createSprite(800, 1250, 1600, wallD);
     bottomWall.addImage(preloadedImages.map.bottomWall);
     bottomWall.immovable = true;
-    bottomWall.debug = true;
+    // bottomWall.debug = true;
 
     console.log(bottomWall);
 
     bottomWall2 = createSprite(3600, 1250, 2400, wallD);
     bottomWall2.addImage(preloadedImages.map.bottomWall2);
     bottomWall2.immovable = true;
-    bottomWall2.debug = true;
+    // bottomWall2.debug = true;
 
     bottomWall3 = createSprite(4800, 1200, 100, wallD);
     bottomWall3.addImage(preloadedImages.map.bottomWall3);
     bottomWall3.immovable = true;
-    bottomWall3.debug = true;
+    // bottomWall3.debug = true;
 
     leftWall = createSprite(0, 600, wallD, 1200);
     leftWall.addImage(preloadedImages.map.vertWall);
     leftWall.immovable = true;
-    leftWall.debug = true;
+    // leftWall.debug = true;
     rightWall = createSprite(3200, 600, wallD, 1200);
     rightWall.addImage(preloadedImages.map.vertWall);
     rightWall.immovable = true;
-    rightWall.debug = true;
+    // rightWall.debug = true;
 
     block1 = createSprite(1600 / 1.5, 800, 800, wallD);
     block1.addImage(preloadedImages.map.block1);
     block1.immovable = true;
-    block1.debug = true;
+    // block1.debug = true;
 
     flyingWall = createSprite(3600, 0, 2400, wallD);
     flyingWall.addImage(preloadedImages.map.flyingWall);
     flyingWall.immovable = true;
-    flyingWall.debug = true;
+    // flyingWall.debug = true;
     gameMap.add(flyingWall);
 
     //add pitfill to the gamemap

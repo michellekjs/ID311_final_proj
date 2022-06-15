@@ -16,7 +16,7 @@ class Character {
         }
         this.nowGrab = false;
         this.player = createSprite(800 + (name == 'small' ? 50 : (-50)), 100, this.width, this.height);
-        this.player.debug = true;
+        // this.player.debug = true;
         this.player.friction = 0.01;
         this.player.maxSpeed = 60;
         this.name = name;

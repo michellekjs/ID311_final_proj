@@ -86,7 +86,9 @@ function draw() {
     fill(255)
     textSize(30)
     text(nickname1, windowWidth / 3, 200)
+    // image(bigpenguin, 50,100, windowWidth / 3, 200)
     text(nickname2, windowWidth * 2 / 3, 200)
+    // image(bigpenguin, 50,100, windowWidth / 3, 200)
 
     textAlign(CENTER);
     text("Tutorial", windowWidth - 160, 80)
