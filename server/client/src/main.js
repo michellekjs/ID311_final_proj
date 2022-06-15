@@ -35,13 +35,30 @@ function preload() {
     preloadedImages.egg.standing[3] = loadImage('./image/egg/egg4.png');
     preloadedImages.egg.standing[4] = loadImage('./image/egg/egg5.png');
 
-    preloadedImages.map.button = loadImage('./image/map/button.png');
+    /*preloadedImages.map.button = loadImage('./image/map/button.png');
     preloadedImages.map.horizontal_wall1 = loadImage('./image/map/horizontal_wall1.png');
     preloadedImages.map.horizontal_wall2 = loadImage('./image/map/horizontal_wall2.png');
     preloadedImages.map.horizontal_wall3 = loadImage('./image/map/horizontal_wall3.png');
     preloadedImages.map.igloo = loadImage('./image/map/igloo.png');
     preloadedImages.map.trap = loadImage('./image/map/trap.png');
-    preloadedImages.map.vertical_wall = loadImage('./image/map/vertical_wall.png');
+    preloadedImages.map.vertical_wall = loadImage('./image/map/vertical_wall.png');*/
+
+    preloadedImages.map.airplane = loadImage('./image/additionalmap/airplane.png');
+    preloadedImages.map.airstep2 = loadImage('./image/additionalmap/airstep2.png');
+    preloadedImages.map.block1 = loadImage('./image/additionalmap/block1.png');
+    preloadedImages.map.bottomWall = loadImage('./image/additionalmap/bottomWall.png');
+    preloadedImages.map.bottomWall2 = loadImage('./image/additionalmap/bottomWall2.png');
+    preloadedImages.map.bottomWall3 = loadImage('./image/additionalmap/bottomWall3.png');
+    preloadedImages.map.box = loadImage('./image/additionalmap/box.png');
+    preloadedImages.map.button = loadImage('./image/additionalmap/button.png');
+    preloadedImages.map.button2 = loadImage('./image/additionalmap/button2.png');
+    preloadedImages.map.flyingWall = loadImage('./image/additionalmap/flyingWall.png');
+    preloadedImages.map.pitFill2_block = loadImage('./image/additionalmap/pitFill2_block.png');
+    preloadedImages.map.spring = loadImage('./image/additionalmap/spring.png');
+    preloadedImages.map.tunnel_afterbutton = loadImage('./image/additionalmap/tunnel_afterbutton.png');
+    preloadedImages.map.tunnel_beforebutton = loadImage('./image/additionalmap/tunnel_beforebutton.png');
+    preloadedImages.map.tunnel_block = loadImage('./image/additionalmap/tunnel_block.png');
+    preloadedImages.map.vertWall = loadImage('./image/additionalmap/vertWall.png');
 
     preloadedImages.penguin1.standing[0] = loadImage('./image/penguin1/p1c1.png');
     preloadedImages.penguin1.falling[0] = loadImage('./image/penguin1/p1f1.png');
