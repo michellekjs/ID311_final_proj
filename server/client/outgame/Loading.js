@@ -40,7 +40,7 @@ function draw() {
     text('Player1', 3 * windowWidth / 4 - 120, windowHeight / 2 - 450);
     text('Player2', 3 * windowWidth / 4, windowHeight / 2 - 450);
     text('Time', 3 * windowWidth / 4 + 120, windowHeight / 2 - 450);
-    for (let i = 0; i < score.data.length; i++) {
+    for (let i = 0; i < score.data.length && i < MAX_HIGHSCORE_PLAYERS; i++) {
         const col = score.data[i];
         text(col.player1, 3 * windowWidth / 4 - 120, windowHeight / 2 - 450 + 50 * (i + 1));
         text(col.player2, 3 * windowWidth / 4, windowHeight / 2 - 450 + 50 * (i + 1));
